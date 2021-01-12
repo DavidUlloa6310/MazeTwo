@@ -11,6 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <center>
@@ -26,7 +27,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Clear" />
+              <MenuItem mnemonicParsing="false" onAction="#resetCanvas" text="Clear" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -43,10 +44,12 @@
             <Region />
             <ImageView fx:id="selectorImage" pickOnBounds="true" preserveRatio="true" />
             <Button fx:id="spawnButton" mnemonicParsing="false" onAction="#placeSpawn" text="Place Spawn" />
-            <Button fx:id="exitButton" mnemonicParsing="false" text="Place Exit" />
-          <Button fx:id="mobsButton" mnemonicParsing="false" text="Place Mobs" />
-            <Button fx:id="swordButton" mnemonicParsing="false" text="Place Swords" />
-            <ChoiceBox fx:id="resourceChoiceBox" prefWidth="150.0" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#placeExit" text="Place Exit" />
+          <Button fx:id="mobsButton" mnemonicParsing="false" onAction="#placeMobs" text="Place Mobs" />
+            <Button fx:id="swordButton" mnemonicParsing="false" onAction="#placeSwords" text="Place Swords" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skin:" />
+            <ChoiceBox fx:id="resourceChoiceBox" onInputMethodTextChanged="#placeSpawn" prefWidth="150.0" />
+            <Button mnemonicParsing="false" onAction="#updateCanvas" text="Update" />
             <Region />
         </buttons>
          <padding>

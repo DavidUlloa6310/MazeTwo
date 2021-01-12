@@ -12,9 +12,10 @@ public enum ResourcePack {
     private final Image blockedPath;
     private final Image mobBlock;
 
+    private static final Image startBlock = new Image("images/blocks/emeraldBlock.png");
     private static final Image sword = new Image("images/items/sword.png");
     private static final Image heart = new Image("images/items/heart.png");
-    private static final Image finalBlock = new Image("images/blocks/goldBlock.png");
+    private static final Image endBlock = new Image("images/blocks/goldBlock.png");
 
     private static final Image teleporter = new Image("images/blocks/portalBlock.png");
 
@@ -44,11 +45,15 @@ public enum ResourcePack {
         return heart;
     }
 
-    public static Image getFinalBlock() {
-        return finalBlock;
+    public static Image getEndBlock() {
+        return endBlock;
     }
 
     public static Image getTeleporter() {
         return teleporter;
+    }
+
+    public static Image getStartBlock() {
+        return startBlock;
     }
 }

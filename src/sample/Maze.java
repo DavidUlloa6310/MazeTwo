@@ -2,8 +2,6 @@ package sample;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -59,7 +57,7 @@ public class Maze extends GridPane {
             for (int c = 0; c < maze[0].length; c++) {
                 add(new ImageView(walkablePath), c, r);
                 if (maze[r][c]) add(new ImageView(blockedPath), c, r);
-                if (r == finalX && c == finalY) add(new ImageView(ResourcePack.getFinalBlock()), r, c);
+                if (r == finalX && c == finalY) add(new ImageView(ResourcePack.getEndBlock()), r, c);
             }
         }
     }

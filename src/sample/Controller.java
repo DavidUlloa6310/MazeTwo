@@ -11,13 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 
-import java.util.Observable;
+import java.util.ArrayList;
 
 public class Controller {
-
-    ObservableList<String> resourcePacks = FXCollections.observableArrayList("");
 
     @FXML
     private Canvas canvas;
@@ -45,12 +42,27 @@ public class Controller {
 
     private GraphicsContext gc;
 
+    private final ObservableList<String> resourcePacks = FXCollections.observableArrayList("Grass", "Cave", "Nether", "End");
+
+    private boolean[][] maze = generateArray();
+    private ResourcePack resourcePack = ResourcePack.GRASS;
+    private Point playerSpawn;
+    private Point exitBlock;
+
+    private ArrayList<Point> swordSpawns = new ArrayList<Point>();
+    private ArrayList<Point> mobSpawns = new ArrayList<Point>();
+    private ArrayList<Point> teleporters = new ArrayList<Point>();
+
+    private ActiveClick activeClick = ActiveClick.DEFAULT;
+
     @FXML
     private void initialize() {
 
+        resourceChoiceBox.setItems(resourcePacks);
+
         gc = canvas.getGraphicsContext2D();
-        paintCanvas();
-        selectorImage.setImage(ResourcePack.CAVE.getWalkablePath());
+        resetCanvas();
+        selectorImage.setImage(resourcePack.getWalkablePath());
     }
 
     public void clickCanvas(MouseEvent e) {
@@ -58,42 +70,181 @@ public class Controller {
     }
 
     public void onMouseDragged(MouseEvent e) {
-        if (e.getButton() == MouseButton.PRIMARY) onMouseLeftClick(e.getX(), e.getY()); else onMouseRightClick(e.getX(), e.getY());
+        if (e.getButton() == MouseButton.PRIMARY && activeClick == ActiveClick.DEFAULT) {
+            onMouseLeftClick(e.getX(), e.getY());
+        } else if (activeClick == ActiveClick.DEFAULT) {
+            onMouseRightClick(e.getX(), e.getY());
+        }
     }
 
     public void onMouseLeftClick(double pixelX, double pixelY) {
         int xBox = (int) pixelX / 25;
         int yBox = (int) pixelY / 25;
-        gc.drawImage(ResourcePack.CAVE.getBlockedPath(), xBox * 25, yBox * 25);
+
+        if ((xBox >= 24 || xBox < 0) || (yBox >= 16 || yBox < 0))
+            return;
+
+        switch(activeClick) {
+            case DEFAULT:
+                maze[xBox][yBox] = true;
+                gc.drawImage(resourcePack.getBlockedPath(), xBox * 25, yBox * 25);
+                break;
+            case SPAWN:
+                if (playerSpawn == null) {
+                    playerSpawn = new Point(xBox, yBox);
+                    gc.drawImage(ResourcePack.getStartBlock(), xBox * 25, yBox * 25);
+                } else if (playerSpawn.getX() == xBox && playerSpawn.getY() == yBox) {
+                    playerSpawn = null;
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    JOP.msg("There can be only one player spawn. \n Please unselect the existing spawn");
+                }
+                break;
+            case ENDBLOCK:
+                if (exitBlock == null) {
+                    exitBlock = new Point(xBox, yBox);
+                    gc.drawImage(ResourcePack.getEndBlock(), xBox * 25, yBox * 25);
+                } else if (exitBlock.getX() == xBox && exitBlock.getY() == yBox) {
+                    exitBlock = null;
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    JOP.msg("There can be only one exit block. \n Please unselect the existing exit block");
+                }
+                break;
+            case MOBS:
+                if (removeFromList(xBox, yBox, mobSpawns)) {
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    gc.drawImage(resourcePack.getMobBlock(), xBox * 25, yBox * 25);
+                    mobSpawns.add(new Point(xBox, yBox));
+                }
+                break;
+            case SWORDS:
+                if (removeFromList(xBox, yBox, swordSpawns)) {
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    gc.drawImage(ResourcePack.getSword(), xBox * 25, yBox * 25);
+                    swordSpawns.add(new Point(xBox, yBox));
+                }
+                break;
+        }
     }
 
     public void onMouseRightClick(double pixelX, double pixelY) {
+
         int xBox = (int) pixelX / 25;
         int yBox = (int) pixelY / 25;
-        gc.drawImage(ResourcePack.CAVE.getWalkablePath(), xBox * 25, yBox * 25);
+
+        if (activeClick == ActiveClick.DEFAULT &&  xBox < 24 && yBox < 16 && xBox > -1 && yBox > -1) {
+            maze[xBox][yBox] = false;
+            gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+        }
+
     }
 
-    public void paintCanvas() {
+    public void resetCanvas() {
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 16; c++) {
-                gc.drawImage(ResourcePack.CAVE.getWalkablePath(), r * 25, c * 25);
+                gc.drawImage(resourcePack.getWalkablePath(), r * 25, c * 25);
             }
         }
     }
 
+    public void repaintCanvas() {
+
+        for (int r = 0; r < 24; r++) {
+            for (int c = 0; c < 16; c++) {
+                if (maze[r][c]) gc.drawImage(resourcePack.getBlockedPath(), r * 25, c * 25); else gc.drawImage(resourcePack.getWalkablePath(), r * 25, c * 25);
+            }
+        }
+
+        if (playerSpawn != null) gc.drawImage(ResourcePack.getStartBlock(), playerSpawn.getX() * 25, playerSpawn.getY() * 25);
+        if (exitBlock != null) gc.drawImage(ResourcePack.getEndBlock(), exitBlock.getX() * 25, exitBlock.getY() * 25);
+
+        for (Point sword : swordSpawns) {
+            gc.drawImage(ResourcePack.getSword(), sword.getX() * 25, sword.getY() * 25);
+        }
+
+        for (Point mob : mobSpawns) {
+            gc.drawImage(resourcePack.getMobBlock(), mob.getX() * 25, mob.getY() * 25);
+        }
+    }
+
+    public void updateCanvas() {
+        if (resourceChoiceBox.getValue().equals("Grass")) {
+            resourcePack = ResourcePack.GRASS;
+        } else if (resourceChoiceBox.getValue().equals("Cave")) {
+            resourcePack = ResourcePack.CAVE;
+        } else if (resourceChoiceBox.getValue().equals("Nether")) {
+            resourcePack = ResourcePack.NETHER;
+        } else if (resourceChoiceBox.getValue().equals("End")) {
+            resourcePack = ResourcePack.END;
+        }
+
+        selectorImage.setImage(resourcePack.getWalkablePath());
+        repaintCanvas();
+    }
+
     public void placeSpawn() {
-        System.out.println("TEST");
+        if (activeClick == ActiveClick.SPAWN) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getWalkablePath());
+        } else {
+            activeClick = ActiveClick.SPAWN;
+            selectorImage.setImage(ResourcePack.getStartBlock());
+        }
     }
 
     public void placeExit() {
-
+        if (activeClick == ActiveClick.ENDBLOCK) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getWalkablePath());
+        } else {
+            activeClick = ActiveClick.ENDBLOCK;
+            selectorImage.setImage(ResourcePack.getEndBlock());
+        }
     }
 
     public void placeMobs() {
-
+        if (activeClick == ActiveClick.MOBS) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getWalkablePath());
+        } else {
+            activeClick = ActiveClick.MOBS;
+            selectorImage.setImage(resourcePack.getMobBlock());
+        }
     }
 
     public void placeSwords() {
-
+        if (activeClick == ActiveClick.SWORDS) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getWalkablePath());
+        } else {
+            activeClick = ActiveClick.SWORDS;
+            selectorImage.setImage(ResourcePack.getSword());
+        }
     }
+
+    public boolean[][] generateArray() {
+        boolean[][] array = new boolean[24][16];
+        for (int r = 0; r < 24; r++) {
+            for (int c = 0; c < 16; c++) {
+                array[r][c] = false;
+            }
+        }
+
+        return array;
+    }
+
+    public boolean removeFromList(int x, int y, ArrayList<Point> list) {
+        for (Point point : list) {
+            if (point.getX() == x && point.getY() == y) {
+                list.remove(point);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
