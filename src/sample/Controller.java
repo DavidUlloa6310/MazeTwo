@@ -3,15 +3,12 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
@@ -19,21 +16,6 @@ public class Controller {
 
     @FXML
     private Canvas canvas;
-
-    @FXML
-    private BorderPane borderPane;
-
-    @FXML
-    private Button spawnButton;
-
-    @FXML
-    private Button mobsButton;
-
-    @FXML
-    private Button swordButton;
-
-    @FXML
-    private Button exitButton;
 
     @FXML
     private ImageView selectorImage;
@@ -45,14 +27,14 @@ public class Controller {
 
     private final ObservableList<String> resourcePacks = FXCollections.observableArrayList("Grass", "Cave", "Nether", "End");
 
-    private boolean[][] maze = generateArray();
+    private final boolean[][] maze = generateArray();
     private ResourcePack resourcePack = ResourcePack.GRASS;
     private Point playerSpawn;
     private Point exitBlock;
 
-    private ArrayList<Point> swordSpawns = new ArrayList<Point>();
-    private ArrayList<Point> mobSpawns = new ArrayList<Point>();
-    private ArrayList<Teleporter> teleporters = new ArrayList<Teleporter>();
+    private final ArrayList<Point> swordSpawns = new ArrayList<>();
+    private final ArrayList<Point> mobSpawns = new ArrayList<>();
+    private final ArrayList<Teleporter> teleporters = new ArrayList<>();
 
     private ActiveClick activeClick = ActiveClick.DEFAULT;
 
@@ -254,7 +236,7 @@ public class Controller {
             return;
         }
 
-        SceneLibrary.addScene(new Maze(maze, resourcePack, swordSpawns, mobSpawns, new ArrayList<Teleporter>(), exitBlock, playerSpawn));
+        SceneLibrary.addScene(new Maze(maze, resourcePack, swordSpawns, mobSpawns, new ArrayList<>(), exitBlock, playerSpawn));
 
     }
 
