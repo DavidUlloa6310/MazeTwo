@@ -5,11 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
 public abstract class SceneLibrary {
+
+    private static Stage primaryStage;
+
     private static ObservableList<Scene> scenes = generateScenes();
 
     public static ObservableList<Scene> generateScenes() {
@@ -76,6 +80,21 @@ public abstract class SceneLibrary {
 
     public static ObservableList<Scene> getScenes() {
         return scenes;
+    }
+
+    public static void setPrimaryStage(Stage primaryStage) {
+        SceneLibrary.primaryStage = primaryStage;
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public static void playScene(int index) {
+        if (index >= scenes.size())
+            return;
+        else
+            primaryStage.setScene(scenes.get(index));
     }
 
     public static void addScene(Maze maze) {

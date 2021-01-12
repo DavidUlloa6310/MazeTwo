@@ -254,8 +254,11 @@ public class Controller {
         }
 
         SceneLibrary.addScene(new Maze(maze, resourcePack, swordSpawns, mobSpawns, new ArrayList<Teleporter>(), exitBlock, playerSpawn));
-        //SEND PLAYER BACK TO LIST OF SCENES.
 
+    }
+
+    public void playGame() {
+        SceneLibrary.playScene(0);
     }
 
 }
