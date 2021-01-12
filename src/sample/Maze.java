@@ -65,8 +65,12 @@ public class Maze extends GridPane {
     public void generateMobs(ArrayList<Point> mobSpawns) {
         for (Point mobSpawn : mobSpawns) {
             mobs.add(new Mob(mobSpawn, mobBlock, this));
-            mobs.get(mobs.size() - 1).startAnimationTimer();
         }
+    }
+
+    public void startMobs() {
+        for (Mob mob : mobs)
+            mob.startAnimationTimer();
     }
 
     public void generateSwords(ArrayList<Point> swordSpawns) {

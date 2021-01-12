@@ -3,6 +3,7 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -51,7 +52,7 @@ public class Controller {
 
     private ArrayList<Point> swordSpawns = new ArrayList<Point>();
     private ArrayList<Point> mobSpawns = new ArrayList<Point>();
-    private ArrayList<Point> teleporters = new ArrayList<Point>();
+    private ArrayList<Teleporter> teleporters = new ArrayList<Teleporter>();
 
     private ActiveClick activeClick = ActiveClick.DEFAULT;
 
@@ -81,12 +82,12 @@ public class Controller {
         int xBox = (int) pixelX / 25;
         int yBox = (int) pixelY / 25;
 
-        if ((xBox >= 24 || xBox < 0) || (yBox >= 16 || yBox < 0))
+        if (xBox > 23 || xBox < 0 || yBox < 0 || yBox > 15)
             return;
 
         switch(activeClick) {
             case DEFAULT:
-                maze[xBox][yBox] = true;
+                maze[yBox][xBox] = true;
                 gc.drawImage(resourcePack.getBlockedPath(), xBox * 25, yBox * 25);
                 break;
             case SPAWN:
@@ -136,25 +137,25 @@ public class Controller {
         int yBox = (int) pixelY / 25;
 
         if (activeClick == ActiveClick.DEFAULT &&  xBox < 24 && yBox < 16 && xBox > -1 && yBox > -1) {
-            maze[xBox][yBox] = false;
+            maze[yBox][xBox] = false;
             gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
         }
 
     }
 
     public void resetCanvas() {
-        for (int r = 0; r < 24; r++) {
-            for (int c = 0; c < 16; c++) {
-                gc.drawImage(resourcePack.getWalkablePath(), r * 25, c * 25);
+        for (int r = 0; r < 16; r++) {
+            for (int c = 0; c < 24; c++) {
+                gc.drawImage(resourcePack.getWalkablePath(), c * 25, r * 25);
             }
         }
     }
 
     public void repaintCanvas() {
 
-        for (int r = 0; r < 24; r++) {
-            for (int c = 0; c < 16; c++) {
-                if (maze[r][c]) gc.drawImage(resourcePack.getBlockedPath(), r * 25, c * 25); else gc.drawImage(resourcePack.getWalkablePath(), r * 25, c * 25);
+        for (int r = 0; r < 16; r++) {
+            for (int c = 0; c < 24; c++) {
+                if (maze[r][c]) gc.drawImage(resourcePack.getBlockedPath(), c * 25, r * 25); else gc.drawImage(resourcePack.getWalkablePath(), c * 25, r * 25);
             }
         }
 
@@ -226,9 +227,9 @@ public class Controller {
     }
 
     public boolean[][] generateArray() {
-        boolean[][] array = new boolean[24][16];
-        for (int r = 0; r < 24; r++) {
-            for (int c = 0; c < 16; c++) {
+        boolean[][] array = new boolean[16][24];
+        for (int r = 0; r < 16; r++) {
+            for (int c = 0; c < 24; c++) {
                 array[r][c] = false;
             }
         }
@@ -258,7 +259,12 @@ public class Controller {
     }
 
     public void playGame() {
-        SceneLibrary.playScene(0);
+        if (playerSpawn == null || exitBlock == null) {
+            JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
+        } else {
+            Maze currentMaze = new Maze(maze, resourcePack, swordSpawns, mobSpawns, teleporters, exitBlock, playerSpawn);
+            SceneLibrary.playScene(currentMaze);
+        }
     }
 
 }

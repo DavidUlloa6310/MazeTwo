@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -8,15 +9,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 public abstract class SceneLibrary {
 
     private static Stage primaryStage;
 
-    private static ObservableList<Scene> scenes = generateScenes();
+    private static ObservableList<Maze> mazes = generateScenes();
 
-    public static ObservableList<Scene> generateScenes() {
+    public static ObservableList<Maze> generateScenes() {
+
+        ObservableList<Maze> mazes = FXCollections.observableArrayList();
 
         ArrayList<Point> mazeOneSwordSpawns = new ArrayList<Point>();
         mazeOneSwordSpawns.add(new Point(10,10));
@@ -24,9 +26,8 @@ public abstract class SceneLibrary {
         ArrayList<Point> mazeOneMobSpawns = new ArrayList<>();
         mazeOneMobSpawns.add(new Point(10,10));
 
-        ObservableList<Scene> scenes = FXCollections.observableArrayList();
         Maze firstMaze = new Maze(MazeArray.getFirstMaze(), ResourcePack.GRASS, mazeOneSwordSpawns, mazeOneMobSpawns, new ArrayList<Teleporter>(), new Point(23, 0), new Point(0,0));
-        scenes.add(setUpScene(firstMaze));
+        mazes.add(firstMaze);
 
         ArrayList<Point> mazeTwoMobSpawns = new ArrayList<Point>();
         mazeTwoMobSpawns.add(new Point(10, 10));
@@ -39,7 +40,7 @@ public abstract class SceneLibrary {
         mazeTwoSwordSpawns.add(new Point(8, 13));
 
         Maze secondMaze = new Maze(MazeArray.getSecondMaze(), ResourcePack.CAVE, mazeTwoSwordSpawns, mazeTwoMobSpawns, new ArrayList<Teleporter>(), new Point(21, 13), new Point(0,0));
-        scenes.add(setUpScene(secondMaze));
+        mazes.add(secondMaze);
 
         ArrayList<Point> mazeThreeMobSpawns = new ArrayList<Point>();
         mazeThreeMobSpawns.add(new Point(21,3));
@@ -53,7 +54,7 @@ public abstract class SceneLibrary {
         mazeThreeMobSpawns.add(new Point(5,14));
 
         Maze thirdMaze = new Maze(MazeArray.getThirdMaze(), ResourcePack.NETHER, mazeThreeSwordSpawns, mazeThreeMobSpawns, new ArrayList<Teleporter>(), new Point(22,0), new Point(11,7));
-        scenes.add(setUpScene(thirdMaze));
+        mazes.add(thirdMaze);
 
         ArrayList<Point> mazeFourMobSpawns = new ArrayList<Point>();
         mazeFourMobSpawns.add(new Point(6,3));
@@ -73,13 +74,13 @@ public abstract class SceneLibrary {
         teleporters.add(new Teleporter(new Point (11, 7), new Point(19,15)));
 
         Maze fourthMaze = new Maze(MazeArray.getFourthMaze(), ResourcePack.END, mazeFourSwordSpawns, mazeFourMobSpawns, teleporters, new Point(21,3), new Point(0,0));
-        scenes.add(setUpScene(fourthMaze));
+        mazes.add(fourthMaze);
 
-        return scenes;
+        return mazes;
     }
 
-    public static ObservableList<Scene> getScenes() {
-        return scenes;
+    public static ObservableList<Maze> getMazes() {
+        return mazes;
     }
 
     public static void setPrimaryStage(Stage primaryStage) {
@@ -91,14 +92,21 @@ public abstract class SceneLibrary {
     }
 
     public static void playScene(int index) {
-        if (index >= scenes.size())
-            return;
-        else
-            primaryStage.setScene(scenes.get(index));
+        if (index < mazes.size()) {
+            Scene activeScene = setUpScene(mazes.get(index));
+            mazes.get(index).startMobs();
+            primaryStage.setScene(activeScene);
+        }
+    }
+
+    public static void playScene(Maze maze) {
+        Scene scene = setUpScene(maze);
+        maze.startMobs();
+        primaryStage.setScene(scene);
     }
 
     public static void addScene(Maze maze) {
-        scenes.add(setUpScene(maze));
+        mazes.add(maze);
     }
 
     public static Scene setUpScene(Maze maze) {
