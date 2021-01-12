@@ -62,7 +62,7 @@ public class Controller {
 
         gc = canvas.getGraphicsContext2D();
         resetCanvas();
-        selectorImage.setImage(resourcePack.getWalkablePath());
+        selectorImage.setImage(resourcePack.getBlockedPath());
     }
 
     public void clickCanvas(MouseEvent e) {
@@ -181,14 +181,14 @@ public class Controller {
             resourcePack = ResourcePack.END;
         }
 
-        selectorImage.setImage(resourcePack.getWalkablePath());
+        selectorImage.setImage(resourcePack.getBlockedPath());
         repaintCanvas();
     }
 
     public void placeSpawn() {
         if (activeClick == ActiveClick.SPAWN) {
             activeClick = ActiveClick.DEFAULT;
-            selectorImage.setImage(resourcePack.getWalkablePath());
+            selectorImage.setImage(resourcePack.getBlockedPath());
         } else {
             activeClick = ActiveClick.SPAWN;
             selectorImage.setImage(ResourcePack.getStartBlock());
@@ -198,7 +198,7 @@ public class Controller {
     public void placeExit() {
         if (activeClick == ActiveClick.ENDBLOCK) {
             activeClick = ActiveClick.DEFAULT;
-            selectorImage.setImage(resourcePack.getWalkablePath());
+            selectorImage.setImage(resourcePack.getBlockedPath());
         } else {
             activeClick = ActiveClick.ENDBLOCK;
             selectorImage.setImage(ResourcePack.getEndBlock());
@@ -208,7 +208,7 @@ public class Controller {
     public void placeMobs() {
         if (activeClick == ActiveClick.MOBS) {
             activeClick = ActiveClick.DEFAULT;
-            selectorImage.setImage(resourcePack.getWalkablePath());
+            selectorImage.setImage(resourcePack.getBlockedPath());
         } else {
             activeClick = ActiveClick.MOBS;
             selectorImage.setImage(resourcePack.getMobBlock());
@@ -218,7 +218,7 @@ public class Controller {
     public void placeSwords() {
         if (activeClick == ActiveClick.SWORDS) {
             activeClick = ActiveClick.DEFAULT;
-            selectorImage.setImage(resourcePack.getWalkablePath());
+            selectorImage.setImage(resourcePack.getBlockedPath());
         } else {
             activeClick = ActiveClick.SWORDS;
             selectorImage.setImage(ResourcePack.getSword());
@@ -245,6 +245,17 @@ public class Controller {
         }
 
         return false;
+    }
+
+    public void saveGame() {
+        if (playerSpawn == null || exitBlock == null) {
+            JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
+            return;
+        }
+
+        SceneLibrary.addScene(new Maze(maze, resourcePack, swordSpawns, mobSpawns, new ArrayList<Teleporter>(), exitBlock, playerSpawn));
+        //SEND PLAYER BACK TO LIST OF SCENES.
+
     }
 
 }
