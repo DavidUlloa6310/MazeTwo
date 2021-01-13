@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
-public class Controller {
+public class BuilderController {
 
     @FXML
     private Canvas canvas;

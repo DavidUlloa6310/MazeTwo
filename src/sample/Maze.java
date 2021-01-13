@@ -60,6 +60,7 @@ public class Maze extends GridPane {
 
         generateMaze();
         this.player = new PlayerModel(playerSpawn, this);
+        updatePlayerUI();
     }
 
     public void start() {
@@ -71,8 +72,6 @@ public class Maze extends GridPane {
         for (Mob mob : mobs) {
             mob.reset();
         }
-
-        JOptionPane.showMessageDialog(null, "You've Lost!\nThrough the game, you walked " + player.getSteps() + " blocks");
 
         if (SceneLibrary.getPreviewStage() == null) {
             //SET PRIMARY STAGE BACK TO LIST OF MAZES.
@@ -90,9 +89,11 @@ public class Maze extends GridPane {
             for (int c = 0; c < maze[0].length; c++) {
                 add(new ImageView(walkablePath), c, r);
                 if (maze[r][c]) add(new ImageView(blockedPath), c, r);
-                if (r == finalX && c == finalY) add(new ImageView(ResourcePack.getEndBlock()), r, c);
             }
         }
+
+        add(new ImageView(ResourcePack.getEndBlock()), finalX, finalY);
+
     }
 
     public void addMob(Point...mobs) {
@@ -135,7 +136,9 @@ public class Maze extends GridPane {
     }
 
     public void updatePlayerUI() {
-
+        for (int i = 0; i < player.getHealth(); i++) {
+            add(new ImageView(ResourcePack.getHeart()), 24, i);
+        }
     }
 
     public boolean[][] getMaze() {

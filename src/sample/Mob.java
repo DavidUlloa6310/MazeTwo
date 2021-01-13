@@ -87,6 +87,7 @@ public class Mob extends Character {
                     player.changeHealth(-1);
                     return true;
                 } else {
+                    JOP.msg("You've Lost!\nThrough the game, you walked " + player.getSteps() + " blocks");
                     getMaze().end();
                 }
             }

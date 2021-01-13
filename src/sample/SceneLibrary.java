@@ -100,6 +100,7 @@ public abstract class SceneLibrary {
 
             if ((maze.getPlayer().getCoordX() == maze.getFinalX() && maze.getPlayer().getCoordY() == maze.getFinalY()) || key.getCode() == KeyCode.L) {
                 JOP.msg("You've Won!\nThrough the game, you walked " + maze.getPlayer().getSteps() + " blocks");
+                maze.end();
             }
 
             for (Mob mob : maze.getMobs()) {
