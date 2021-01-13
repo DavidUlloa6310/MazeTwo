@@ -75,9 +75,9 @@ public abstract class SceneLibrary {
     public static void previewGame(Maze maze) {
         Scene scene = setUpScene(maze);
         SceneLibrary.setPreviewStage(new Stage());
-        maze.startMobs();
         SceneLibrary.previewStage.setScene(scene);
         previewStage.show();
+        maze.startMobs();
     }
 
     public static void addScene(Maze maze) {
