@@ -27,13 +27,13 @@ public class Controller {
 
     private final ObservableList<String> resourcePacks = FXCollections.observableArrayList("Grass", "Cave", "Nether", "End");
 
-    private final boolean[][] maze = generateArray();
+    private boolean[][] maze = generateArray();
     private ResourcePack resourcePack = ResourcePack.GRASS;
     private Point playerSpawn;
     private Point exitBlock;
 
-    private final ArrayList<Point> swordSpawns = new ArrayList<>();
-    private final ArrayList<Point> mobSpawns = new ArrayList<>();
+    private ArrayList<Point> swordSpawns = new ArrayList<>();
+    private ArrayList<Point> mobSpawns = new ArrayList<>();
     private final ArrayList<Teleporter> teleporters = new ArrayList<>();
 
     private ActiveClick activeClick = ActiveClick.DEFAULT;
@@ -166,6 +166,15 @@ public class Controller {
 
         selectorImage.setImage(resourcePack.getBlockedPath());
         repaintCanvas();
+    }
+
+    public void clearMaze() {
+        resetCanvas();
+        this.maze = generateArray();
+        playerSpawn = null;
+        exitBlock = null;
+        mobSpawns = new ArrayList<Point>();
+        swordSpawns = new ArrayList<Point>();
     }
 
     public void placeSpawn() {

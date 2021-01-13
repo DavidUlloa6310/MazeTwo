@@ -20,60 +20,30 @@ public abstract class SceneLibrary {
 
         ObservableList<Maze> mazes = FXCollections.observableArrayList();
 
-        ArrayList<Point> mazeOneSwordSpawns = new ArrayList<Point>();
-        mazeOneSwordSpawns.add(new Point(10,10));
-
-        ArrayList<Point> mazeOneMobSpawns = new ArrayList<>();
-        mazeOneMobSpawns.add(new Point(10,10));
-
-        Maze firstMaze = new Maze(MazeArray.getFirstMaze(), ResourcePack.GRASS, mazeOneSwordSpawns, mazeOneMobSpawns, new ArrayList<Teleporter>(), new Point(23, 0), new Point(0,0));
+        Maze firstMaze = new Maze(MazeArray.getFirstMaze(), ResourcePack.GRASS, new Point(23, 0), new Point(0,0));
+        firstMaze.addMob(new Point(10,10));
+        firstMaze.addSword(new Point(10,10));
         mazes.add(firstMaze);
 
-        ArrayList<Point> mazeTwoMobSpawns = new ArrayList<Point>();
-        mazeTwoMobSpawns.add(new Point(10, 10));
-        mazeTwoMobSpawns.add(new Point(5,10));
-        mazeTwoMobSpawns.add(new Point(8, 13));
-
-        ArrayList<Point> mazeTwoSwordSpawns = new ArrayList<Point>();
-        mazeTwoSwordSpawns.add(new Point(17, 10));
-        mazeTwoSwordSpawns.add(new Point(5,10));
-        mazeTwoSwordSpawns.add(new Point(8, 13));
-
-        Maze secondMaze = new Maze(MazeArray.getSecondMaze(), ResourcePack.CAVE, mazeTwoSwordSpawns, mazeTwoMobSpawns, new ArrayList<Teleporter>(), new Point(21, 13), new Point(0,0));
+        Maze secondMaze = new Maze(MazeArray.getSecondMaze(), ResourcePack.CAVE, new Point(21, 13), new Point(0,0));
+        secondMaze.addMob(new Point(10,10), new Point(5,10), new Point(8,13));
+        secondMaze.addSword(new Point(17,10), new Point(5,10), new Point(8,13));
         mazes.add(secondMaze);
 
-        ArrayList<Point> mazeThreeMobSpawns = new ArrayList<Point>();
-        mazeThreeMobSpawns.add(new Point(21,3));
-        mazeThreeMobSpawns.add(new Point(17,11));
-        mazeThreeMobSpawns.add(new Point(5,13));
-
-        ArrayList<Point> mazeThreeSwordSpawns = new ArrayList<Point>();
-        mazeThreeMobSpawns.add(new Point(7,7));
-        mazeThreeMobSpawns.add(new Point(19,7));
-        mazeThreeMobSpawns.add(new Point(20,11));
-        mazeThreeMobSpawns.add(new Point(5,14));
-
-        Maze thirdMaze = new Maze(MazeArray.getThirdMaze(), ResourcePack.NETHER, mazeThreeSwordSpawns, mazeThreeMobSpawns, new ArrayList<Teleporter>(), new Point(22,0), new Point(11,7));
+        Maze thirdMaze = new Maze(MazeArray.getThirdMaze(), ResourcePack.NETHER, new Point(22,0), new Point(11,7));
+        thirdMaze.addMob(new Point(21,3), new Point(17,11), new Point(5,13));
+        thirdMaze.addSword(new Point(7,7), new Point(19,7), new Point(20, 11), new Point(5,14));
         mazes.add(thirdMaze);
 
-        ArrayList<Point> mazeFourMobSpawns = new ArrayList<Point>();
-        mazeFourMobSpawns.add(new Point(6,3));
-        mazeFourMobSpawns.add(new Point(13,2));
-        mazeFourMobSpawns.add(new Point(17,14));
-
-        ArrayList<Point> mazeFourSwordSpawns = new ArrayList<Point>();
-        mazeFourSwordSpawns.add(new Point(0,7));
-        mazeFourSwordSpawns.add(new Point(1,10));
-        mazeFourSwordSpawns.add(new Point(16,1));
-
-        ArrayList<Teleporter> teleporters = new ArrayList<Teleporter>();
-        teleporters.add(new Teleporter(new Point(2,12), new Point(15,0)));
-        teleporters.add(new Teleporter(new Point(15,0), new Point(19,15)));
-        teleporters.add(new Teleporter(new Point(19,15), new Point(19, 5)));
-        teleporters.add(new Teleporter(new Point(19,5), new Point(23,10)));
-        teleporters.add(new Teleporter(new Point (11, 7), new Point(19,15)));
-
-        Maze fourthMaze = new Maze(MazeArray.getFourthMaze(), ResourcePack.END, mazeFourSwordSpawns, mazeFourMobSpawns, teleporters, new Point(21,3), new Point(0,0));
+        Maze fourthMaze = new Maze(MazeArray.getFourthMaze(), ResourcePack.END, new Point(21,3), new Point(0,0));
+        fourthMaze.addMob(new Point(6,3), new Point(13,2), new Point(17,14));
+        fourthMaze.addSword(new Point(0,7), new Point(1,10), new Point(16,1));
+        fourthMaze.addTeleporters(
+                new Teleporter(new Point(2,12), new Point(15,0), fourthMaze),
+                new Teleporter(new Point(15,0), new Point(19,15), fourthMaze),
+                new Teleporter(new Point(19,15), new Point(19, 5), fourthMaze),
+                new Teleporter(new Point(19,5), new Point(23,10), fourthMaze),
+                new Teleporter(new Point (11, 7), new Point(19,15), fourthMaze));
         mazes.add(fourthMaze);
 
         return mazes;

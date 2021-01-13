@@ -14,10 +14,11 @@ public class Teleporter extends ImageView {
         return teleportPoint;
     }
 
-    public Teleporter(Point startPoint, Point teleportPoint) {
+    public Teleporter(Point startPoint, Point teleportPoint, Maze maze) {
         this.startPoint = startPoint;
         this.teleportPoint = teleportPoint;
         setImage(ResourcePack.getTeleporter());
+        maze.add(this, getStartPoint().getX(), getStartPoint().getY());
     }
 
 }

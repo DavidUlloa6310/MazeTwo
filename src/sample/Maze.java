@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Maze extends GridPane {
     //ADD OPTION FOR TELEPORTER
@@ -25,11 +26,19 @@ public class Maze extends GridPane {
     private ArrayList<Sword> swords = new ArrayList<>();
     private ArrayList<Teleporter> teleporters = new ArrayList<>();
 
-    public Maze(boolean[][] maze, ResourcePack resourcePack, ArrayList<Point> swordSpawns, ArrayList<Point> mobSpawns, ArrayList<Teleporter> teleporters, Point finalBlock, Point playerSpawn) {
-        this(maze, resourcePack.getWalkablePath(), resourcePack.getBlockedPath(), resourcePack.getMobBlock(), swordSpawns, mobSpawns, teleporters, finalBlock, playerSpawn);
+    public Maze(boolean[][] maze, ResourcePack resourcePack, Point finalBlock, Point playerSpawn) {
+        this(maze, resourcePack.getWalkablePath(), resourcePack.getBlockedPath(), resourcePack.getMobBlock(), finalBlock, playerSpawn);
     }
 
-    public Maze(boolean[][] maze, Image walkablePath, Image blockedPath, Image mobBlock, ArrayList<Point> swordSpawns, ArrayList<Point> mobSpawns, ArrayList<Teleporter> teleporters, Point finalBlock, Point playerSpawn) {
+    public Maze(boolean[][] maze, ResourcePack resourcePack, ArrayList<Point> swords, ArrayList<Point> mobs, ArrayList<Teleporter> teleporters, Point finalBlock, Point playerSpawn) {
+        this(maze, resourcePack, finalBlock, playerSpawn);
+        generateSwords(swords);
+        generateMobs(mobs);
+        this.teleporters = teleporters;
+
+    }
+
+    public Maze(boolean[][] maze, Image walkablePath, Image blockedPath, Image mobBlock, Point finalBlock, Point playerSpawn) {
         this.maze = maze;
 
         this.walkablePath = walkablePath;
@@ -41,15 +50,12 @@ public class Maze extends GridPane {
 
         this.playerSpawn = playerSpawn;
 
-        this.teleporters = teleporters;
-
         generateMaze();
         this.player = new PlayerModel(playerSpawn, this);
+    }
 
-        generateMobs(mobSpawns);
-        generateSwords(swordSpawns);
-        generateTeleporters(teleporters);
-
+    public void start() {
+        startMobs();
     }
 
     public void generateMaze() {
@@ -62,27 +68,37 @@ public class Maze extends GridPane {
         }
     }
 
+    public void addMob(Point...mobs) {
+        for (Point mob : mobs) {
+            this.mobs.add(new Mob(mob, mobBlock, this));
+        }
+    }
+
+    public void addSword(Point...swords) {
+        for (Point sword : swords) {
+            this.swords.add(new Sword(sword, this));
+        }
+    }
+
+    public void addTeleporters(Teleporter...teleporters) {
+        this.teleporters.addAll(Arrays.asList(teleporters));
+    }
+
     public void generateMobs(ArrayList<Point> mobSpawns) {
         for (Point mobSpawn : mobSpawns) {
             mobs.add(new Mob(mobSpawn, mobBlock, this));
         }
     }
 
+    public void generateSwords(ArrayList<Point> swords) {
+        for (Point sword : swords) {
+            this.swords.add(new Sword(sword, this));
+        }
+    }
+
     public void startMobs() {
         for (Mob mob : mobs)
             mob.startAnimationTimer();
-    }
-
-    public void generateSwords(ArrayList<Point> swordSpawns) {
-        for (Point swordSpawn : swordSpawns) {
-            swords.add(new Sword(swordSpawn, this));
-        }
-    }
-
-    public void generateTeleporters(ArrayList<Teleporter> teleporters) {
-        for (Teleporter teleporter : teleporters) {
-            add(teleporter, teleporter.getStartPoint().getX(), teleporter.getStartPoint().getY());
-        }
     }
 
     public PlayerModel getPlayer() {

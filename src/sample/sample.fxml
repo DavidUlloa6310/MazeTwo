@@ -28,7 +28,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#resetCanvas" text="Clear" />
+              <MenuItem mnemonicParsing="false" onAction="#clearMaze" text="Clear" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
