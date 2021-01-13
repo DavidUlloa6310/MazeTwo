@@ -10,14 +10,17 @@ import static sample.Main.*;
 public class Character extends ImageView {
     private int x;
     private int y;
+    private Point spawn;
 
     private Maze maze;
 
     private int steps;
     public int getSteps() { return steps; }
+    public Point getSpawn() { return spawn; }
 
     public Character(Point spawn, Image image, Maze maze) {
         setImage(image);
+        this.spawn = spawn;
         x = spawn.getX();
         y = spawn.getY();
         this.maze = maze;

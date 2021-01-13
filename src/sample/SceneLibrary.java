@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public abstract class SceneLibrary {
 
     private static Stage primaryStage;
+    private static Stage previewStage;
 
     private static ObservableList<Maze> mazes = generateScenes();
 
@@ -56,12 +57,14 @@ public abstract class SceneLibrary {
     public static void setPrimaryStage(Stage primaryStage) {
         SceneLibrary.primaryStage = primaryStage;
     }
+    public static void setPreviewStage(Stage previewStage) {SceneLibrary.previewStage = previewStage; }
 
     public static Stage getPrimaryStage() {
         return primaryStage;
     }
+    public static Stage getPreviewStage() { return previewStage; }
 
-    public static void playScene(int index) {
+    public static void previewGame(int index) {
         if (index < mazes.size()) {
             Scene activeScene = setUpScene(mazes.get(index));
             mazes.get(index).startMobs();
@@ -69,10 +72,12 @@ public abstract class SceneLibrary {
         }
     }
 
-    public static void playScene(Maze maze) {
+    public static void previewGame(Maze maze) {
         Scene scene = setUpScene(maze);
+        SceneLibrary.setPreviewStage(new Stage());
         maze.startMobs();
-        primaryStage.setScene(scene);
+        SceneLibrary.previewStage.setScene(scene);
+        previewStage.show();
     }
 
     public static void addScene(Maze maze) {
@@ -95,15 +100,18 @@ public abstract class SceneLibrary {
 
             if ((maze.getPlayer().getCoordX() == maze.getFinalX() && maze.getPlayer().getCoordY() == maze.getFinalY()) || key.getCode() == KeyCode.L) {
                 JOP.msg("You've Won!\nThrough the game, you walked " + maze.getPlayer().getSteps() + " blocks");
-                //END GAME OR SWITCH SCENE.
             }
 
             for (Mob mob : maze.getMobs()) {
 
                 if (!mob.isDead() && mob.checkDamage(maze.getPlayer())) {
-//                    Media media = new Media(new File(deathSoundPath).toURI().toString());
-//                    MediaPlayer deathPlayer = new MediaPlayer(media);
-//                    deathPlayer.setAutoPlay(true);
+
+                    if (SceneLibrary.previewStage == null) {
+                        //SEND PRIMARY STAGE BACK TO LIST
+                    } else {
+                        SceneLibrary.previewStage.close();
+                        SceneLibrary.previewStage = null;
+                    }
                 }
 
                 maze.updatePlayerUI();

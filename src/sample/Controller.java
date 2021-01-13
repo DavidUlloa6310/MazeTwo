@@ -249,14 +249,14 @@ public class Controller {
 
     }
 
-    public void playGame() {
+    public void previewGame() {
         if (playerSpawn == null || exitBlock == null) {
             JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
             return;
         }
 
         Maze currentMaze = new Maze(maze, resourcePack, swordSpawns, mobSpawns, teleporters, exitBlock, playerSpawn);
-        SceneLibrary.playScene(currentMaze);
+        SceneLibrary.previewGame(currentMaze);
     }
 
 }

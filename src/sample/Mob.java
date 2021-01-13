@@ -10,6 +10,7 @@ import javax.swing.*;
 
 public class Mob extends Character {
     private boolean isDead = false;
+    private int speed = 2;
     private AnimationTimer animationTimer;
     public boolean isDead() { return isDead; }
     public void setDead(boolean isDead) { this.isDead = isDead; }
@@ -30,14 +31,12 @@ public class Mob extends Character {
                     }
                 }
 
-                if (now - lastTick > 500000000 / 2) {
+                if (now - lastTick > 500000000 / speed) {
                     lastTick = now;
 
-                    if (!isDead()) {
-                        move(maze.getPlayer());
-                        checkDamage(maze.getPlayer());
-                        maze.updatePlayerUI();
-                    }
+                    move(maze.getPlayer());
+                    checkDamage(maze.getPlayer());
+                    maze.updatePlayerUI();
 
                 }
 
@@ -61,8 +60,20 @@ public class Mob extends Character {
     }
 
     public void die() {
-        toBack();
         this.setDead(true);
+        toBack();
+        stopAnimationTimer();
+    }
+
+    public void alive() {
+        this.setDead(false);
+        startAnimationTimer();
+    }
+
+    public void reset() {
+        stopAnimationTimer();
+        respawn(getSpawn().getX(), getSpawn().getY());
+        toFront();
     }
 
     public boolean checkDamage(PlayerModel player) {
@@ -76,15 +87,20 @@ public class Mob extends Character {
                     player.changeHealth(-1);
                     return true;
                 } else {
-                    JOptionPane.showMessageDialog(null, "You've Lost!\nThrough the game, you walked " + player.getSteps() + " blocks");
+                    getMaze().end();
                 }
             }
         }
         return false;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public void startAnimationTimer() {
         animationTimer.start();
     }
+    public void stopAnimationTimer() { animationTimer.stop(); }
 
 }

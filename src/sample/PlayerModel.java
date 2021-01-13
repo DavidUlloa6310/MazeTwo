@@ -32,4 +32,10 @@ public class PlayerModel extends Character {
         return hasSword;
     }
 
+    public void reset() {
+        respawn(getSpawn().getX(),getSpawn().getY());
+        health = 3;
+        hasSword = false;
+    }
+
 }
