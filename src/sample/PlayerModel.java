@@ -18,6 +18,7 @@ public class PlayerModel extends Character {
 
     public void changeHealth(int amount) {
         health += amount;
+        getMaze().updatePlayerUI();
     }
 
     public void addSword() {
@@ -26,6 +27,7 @@ public class PlayerModel extends Character {
 
     public void removeSword() {
         hasSword = false;
+        getMaze().updatePlayerUI();
     }
 
     public boolean hasSword() {

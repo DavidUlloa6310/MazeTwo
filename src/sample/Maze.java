@@ -3,6 +3,8 @@ package sample;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -136,9 +138,15 @@ public class Maze extends GridPane {
     }
 
     public void updatePlayerUI() {
+        for (int i = 0; i < 5; i++)
+            add(new Rectangle(25, 25, Color.WHITE), 24, i);
+
         for (int i = 0; i < player.getHealth(); i++) {
             add(new ImageView(ResourcePack.getHeart()), 24, i);
         }
+
+        if (player.hasSword()) add(new ImageView(ResourcePack.getSword()), 24, player.getHealth() + 1);
+
     }
 
     public boolean[][] getMaze() {
