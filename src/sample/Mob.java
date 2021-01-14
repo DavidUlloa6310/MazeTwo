@@ -73,6 +73,7 @@ public class Mob extends Character {
     public void reset() {
         stopAnimationTimer();
         respawn(getSpawn().getX(), getSpawn().getY());
+        this.speed = 2;
         toFront();
     }
 
