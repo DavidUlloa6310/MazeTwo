@@ -75,12 +75,8 @@ public class Maze extends GridPane {
             mob.reset();
         }
 
-        if (SceneLibrary.getPreviewStage() == null) {
-            //SET PRIMARY STAGE BACK TO LIST OF MAZES.
-        } else {
-            SceneLibrary.getPreviewStage().close();
-            SceneLibrary.setPreviewStage(null);
-        }
+        SceneLibrary.getPreviewStage().close();
+        SceneLibrary.setPreviewStage(null);
 
         generateSwords(swordSpawns);
         player.reset();

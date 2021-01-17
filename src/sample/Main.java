@@ -15,14 +15,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent builderRoot = FXMLLoader.load(getClass().getResource("MazeBuilder.fxml"));
-        Parent listRoot = FXMLLoader.load(getClass().getResource("MazeList.fxml"));
 
-        Scene mazeList = new Scene(listRoot, 800, 500);
         Scene mazeBuilder = new Scene(builderRoot, 800, 500);
 
         primaryStage.setScene(mazeBuilder);
         SceneLibrary.setPrimaryStage(primaryStage);
-        SceneLibrary.setMazeList(mazeList);
         SceneLibrary.setMazeBuilder(mazeBuilder);
         primaryStage.show();
     }

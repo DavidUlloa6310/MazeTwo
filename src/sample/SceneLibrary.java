@@ -15,7 +15,6 @@ public abstract class SceneLibrary {
     private static Stage primaryStage;
     private static Stage previewStage;
 
-    private static Scene mazeList;
     private static Scene mazeBuilder;
 
     private static ObservableList<Maze> mazes = generateScenes();
@@ -64,12 +63,6 @@ public abstract class SceneLibrary {
     }
     public static void setPreviewStage(Stage previewStage) {
         SceneLibrary.previewStage = previewStage;
-        previewStage.setTitle("Maze Preview");
-        previewStage.setResizable(false);
-    }
-
-    public static void setMazeList(Scene mazeList) {
-        SceneLibrary.mazeList = mazeList;
     }
 
     public static void setMazeBuilder(Scene mazeBuilder) {
@@ -92,6 +85,8 @@ public abstract class SceneLibrary {
     public static void previewGame(Maze maze) {
         Scene scene = setUpScene(maze);
         SceneLibrary.setPreviewStage(new Stage());
+        previewStage.setTitle("Playing Maze");
+        previewStage.setResizable(false);
         SceneLibrary.previewStage.setScene(scene);
         previewStage.show();
         maze.startMobs();

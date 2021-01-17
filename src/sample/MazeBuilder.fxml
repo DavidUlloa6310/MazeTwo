@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BuilderController">
+<BorderPane fx:id="borderPane" prefHeight="470.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BuilderController">
    <center>
       <Canvas fx:id="canvas" height="400.0" onMouseClicked="#clickCanvas" onMouseDragged="#onMouseDragged" width="600.0" BorderPane.alignment="CENTER" />
    </center>
@@ -22,8 +22,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save" />
-                  <MenuItem mnemonicParsing="false" onAction="#previewGame" text="Preview" />
+                  <MenuItem mnemonicParsing="false" onAction="#previewGame" text="Play" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -33,7 +32,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#About" text="About" />
             </items>
           </Menu>
         </menus>
