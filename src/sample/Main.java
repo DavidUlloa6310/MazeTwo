@@ -14,12 +14,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MazeBuilder.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setResizable(true);
-        primaryStage.setScene(new Scene(root, 800, 500));
+        Parent builderRoot = FXMLLoader.load(getClass().getResource("MazeBuilder.fxml"));
+        Parent listRoot = FXMLLoader.load(getClass().getResource("MazeList.fxml"));
+
+        Scene mazeList = new Scene(listRoot, 800, 500);
+        Scene mazeBuilder = new Scene(builderRoot, 800, 500);
+
+        primaryStage.setScene(mazeBuilder);
         SceneLibrary.setPrimaryStage(primaryStage);
-//        SceneLibrary.playScene(0);
+        SceneLibrary.setMazeList(mazeList);
+        SceneLibrary.setMazeBuilder(mazeBuilder);
         primaryStage.show();
     }
 
