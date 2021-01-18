@@ -3,6 +3,9 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ChoiceBox;
@@ -10,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BuilderController {
@@ -33,10 +37,16 @@ public class BuilderController {
     private Point exitBlock;
 
     private ArrayList<Point> swordSpawns = new ArrayList<>();
+    private ArrayList<Point> bootSpawns = new ArrayList<>();
+    private ArrayList<Point> armorSpawns = new ArrayList<>();
+    private ArrayList<Point> healthPotionSpawns = new ArrayList<>();
+    private ArrayList<Point> invisPotionSpawns = new ArrayList<>();
+
     private ArrayList<Point> mobSpawns = new ArrayList<>();
     private final ArrayList<Teleporter> teleporters = new ArrayList<>();
 
     private ActiveClick activeClick = ActiveClick.DEFAULT;
+    private Object ItemSelectionController;
 
     @FXML
     private void initialize() {
@@ -110,6 +120,38 @@ public class BuilderController {
                     swordSpawns.add(new Point(xBox, yBox));
                 }
                 break;
+            case BOOTS:
+                if (removeFromList(xBox, yBox, bootSpawns)) {
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    gc.drawImage(ResourcePack.getBoots(), xBox * 25, yBox * 25);
+                    bootSpawns.add(new Point(xBox, yBox));
+                }
+                break;
+            case ARMOR:
+                if (removeFromList(xBox, yBox, armorSpawns)) {
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    gc.drawImage(ResourcePack.getArmor(), xBox * 25, yBox * 25);
+                    armorSpawns.add(new Point(xBox, yBox));
+                }
+                break;
+            case INVISPOTION:
+                if (removeFromList(xBox, yBox, invisPotionSpawns)) {
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    gc.drawImage(ResourcePack.getInvisPotion(), xBox * 25, yBox * 25);
+                    invisPotionSpawns.add(new Point(xBox, yBox));
+                }
+                break;
+            case HEALTHPOTION:
+                if (removeFromList(xBox, yBox, healthPotionSpawns)) {
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                } else {
+                    gc.drawImage(ResourcePack.getHealthPotion(), xBox * 25, yBox * 25);
+                    healthPotionSpawns.add(new Point(xBox, yBox));
+                }
+                break;
         }
     }
 
@@ -175,6 +217,10 @@ public class BuilderController {
         exitBlock = null;
         mobSpawns = new ArrayList<Point>();
         swordSpawns = new ArrayList<Point>();
+        bootSpawns = new ArrayList<>();
+        armorSpawns = new ArrayList<>();
+        healthPotionSpawns = new ArrayList<>();
+        invisPotionSpawns = new ArrayList<>();
     }
 
     public void placeSpawn() {
@@ -217,6 +263,46 @@ public class BuilderController {
         }
     }
 
+    public void placeArmor() {
+        if (activeClick == ActiveClick.ARMOR) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getBlockedPath());
+        } else {
+            activeClick = ActiveClick.ARMOR;
+            selectorImage.setImage(ResourcePack.getArmor());
+        }
+    }
+
+    public void placeBoots() {
+        if (activeClick == ActiveClick.BOOTS) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getBlockedPath());
+        } else {
+            activeClick = ActiveClick.BOOTS;
+            selectorImage.setImage(ResourcePack.getBoots());
+        }
+    }
+
+    public void placeHealthPotion() {
+        if (activeClick == ActiveClick.HEALTHPOTION) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getBlockedPath());
+        } else {
+            activeClick = ActiveClick.HEALTHPOTION;
+            selectorImage.setImage(ResourcePack.getHealthPotion());
+        }
+    }
+
+    public void placeInvisPotion() {
+        if (activeClick == ActiveClick.INVISPOTION) {
+            activeClick = ActiveClick.DEFAULT;
+            selectorImage.setImage(resourcePack.getBlockedPath());
+        } else {
+            activeClick = ActiveClick.INVISPOTION;
+            selectorImage.setImage(ResourcePack.getInvisPotion());
+        }
+    }
+
     public boolean[][] generateArray() {
         boolean[][] array = new boolean[16][24];
         for (int r = 0; r < 16; r++) {
@@ -239,23 +325,20 @@ public class BuilderController {
         return false;
     }
 
-    public void saveGame() {
-        if (playerSpawn == null || exitBlock == null) {
-            JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
-            return;
-        }
-
-        SceneLibrary.addScene(new Maze(maze, resourcePack, swordSpawns, mobSpawns, new ArrayList<>(), exitBlock, playerSpawn));
-
-    }
-
     public void previewGame() {
         if (playerSpawn == null || exitBlock == null) {
             JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
             return;
         }
 
-        Maze currentMaze = new Maze(maze, resourcePack, swordSpawns, mobSpawns, teleporters, exitBlock, playerSpawn);
+        Maze currentMaze = new Maze(maze, resourcePack, mobSpawns, teleporters, exitBlock, playerSpawn);
+
+        currentMaze.addSwords(swordSpawns);
+        currentMaze.addBoots(bootSpawns);
+        currentMaze.addArmor(armorSpawns);
+        currentMaze.addHealthPotion(healthPotionSpawns);
+        currentMaze.addInvisPotion(invisPotionSpawns);
+
         SceneLibrary.previewGame(currentMaze);
     }
 

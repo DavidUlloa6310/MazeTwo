@@ -1,14 +1,11 @@
 package sample;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public abstract class SceneLibrary {
 
@@ -130,11 +127,10 @@ public abstract class SceneLibrary {
                 maze.updatePlayerUI();
             }
 
-            for (Sword sword : maze.getSwords()) {
+            for (Item item : maze.getItems()) {
 
-                if (maze.getPlayer().getCoordX() == sword.getCoordX() && maze.getPlayer().getCoordY() == sword.getCoordY() && !sword.isGone()) {
-                    maze.getPlayer().addSword();
-                    maze.getChildren().remove(sword);
+                if (maze.getPlayer().getCoordX() == item.getCoordX() && maze.getPlayer().getCoordY() == item.getCoordY() && !item.isGone()) {
+                    item.collect(maze.getPlayer());
                     maze.updatePlayerUI();
                 }
             }

@@ -11,9 +11,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPane" prefHeight="470.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BuilderController">
+<BorderPane fx:id="borderPane" prefHeight="515.0" prefWidth="784.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BuilderController">
    <center>
       <Canvas fx:id="canvas" height="400.0" onMouseClicked="#clickCanvas" onMouseDragged="#onMouseDragged" width="600.0" BorderPane.alignment="CENTER" />
    </center>
@@ -39,22 +40,39 @@
       </MenuBar>
    </top>
    <bottom>
-      <ButtonBar BorderPane.alignment="CENTER">
-        <buttons>
-            <Region />
-            <ImageView fx:id="selectorImage" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="spawnButton" mnemonicParsing="false" onAction="#placeSpawn" text="Place Spawn" />
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#placeExit" text="Place Exit" />
-          <Button fx:id="mobsButton" mnemonicParsing="false" onAction="#placeMobs" text="Place Mobs" />
-            <Button fx:id="swordButton" mnemonicParsing="false" onAction="#placeSwords" text="Place Swords" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skin:" />
-            <ChoiceBox fx:id="resourceChoiceBox" onInputMethodTextChanged="#placeSpawn" prefWidth="150.0" />
-            <Button mnemonicParsing="false" onAction="#updateCanvas" text="Update" />
-            <Region />
-        </buttons>
-         <padding>
-            <Insets bottom="10.0" top="10.0" />
-         </padding>
-      </ButtonBar>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <ButtonBar>
+               <buttons>
+                  <Region />
+                  <ImageView fx:id="selectorImage" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="spawnButton" mnemonicParsing="false" onAction="#placeSpawn" text="Place Spawn" />
+                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#placeExit" text="Place Exit" />
+                  <Button fx:id="mobsButton" mnemonicParsing="false" onAction="#placeMobs" text="Place Mobs" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skin:" />
+                  <ChoiceBox fx:id="resourceChoiceBox" onInputMethodTextChanged="#placeSpawn" prefWidth="150.0" />
+                  <Button mnemonicParsing="false" onAction="#updateCanvas" text="Update" />
+                  <Region />
+               </buttons>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </ButtonBar>
+            <ButtonBar>
+               <buttons>
+                  <Region />
+                  <Button mnemonicParsing="false" onAction="#placeSwords" text="Place Sword" />
+                  <Button mnemonicParsing="false" onAction="#placeArmor" text="Place Armor" />
+                  <Button mnemonicParsing="false" onAction="#placeBoots" text="Place Boots" />
+                  <Button mnemonicParsing="false" onAction="#placeInvisPotion" text="Place Invis Potion" />
+                  <Button mnemonicParsing="false" onAction="#placeHealthPotion" text="Place Health Potion" />
+                  <Region />
+               </buttons>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </ButtonBar>
+         </children>
+      </VBox>
    </bottom>
 </BorderPane>

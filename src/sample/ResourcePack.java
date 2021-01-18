@@ -15,6 +15,10 @@ public enum ResourcePack {
     private static final Image startBlock = new Image("images/blocks/emeraldBlock.png");
     private static final Image sword = new Image("images/items/sword.png");
     private static final Image heart = new Image("images/items/heart.png");
+    private static final Image armor = new Image("images/items/armor.png");
+    private static final Image boots = new Image("images/items/boots.png");
+    private static final Image healthPotion = new Image("images/items/healPotion.png");
+    private static final Image invisPotion = new Image("images/items/invisPotion.gif");
     private static final Image endBlock = new Image("images/blocks/goldBlock.png");
 
     private static final Image teleporter = new Image("images/blocks/portalBlock.png");
@@ -55,5 +59,21 @@ public enum ResourcePack {
 
     public static Image getStartBlock() {
         return startBlock;
+    }
+
+    public static Image getArmor() {
+        return armor;
+    }
+
+    public static Image getBoots() {
+        return boots;
+    }
+
+    public static Image getHealthPotion() {
+        return healthPotion;
+    }
+
+    public static Image getInvisPotion() {
+        return invisPotion;
     }
 }

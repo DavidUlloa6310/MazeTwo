@@ -5,8 +5,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import sample.Items.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,20 +28,16 @@ public class Maze extends GridPane {
     private ArrayList<Mob> mobs = new ArrayList<>();
     private ArrayList<Point> mobSpawns = new ArrayList();
 
-    private ArrayList<Sword> swords = new ArrayList<>();
-    private ArrayList<Point> swordSpawns = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
+
     private ArrayList<Teleporter> teleporters = new ArrayList<>();
 
     public Maze(boolean[][] maze, ResourcePack resourcePack, Point finalBlock, Point playerSpawn) {
         this(maze, resourcePack.getWalkablePath(), resourcePack.getBlockedPath(), resourcePack.getMobBlock(), finalBlock, playerSpawn);
     }
 
-    public Maze(boolean[][] maze, ResourcePack resourcePack, ArrayList<Point> swords, ArrayList<Point> mobs, ArrayList<Teleporter> teleporters, Point finalBlock, Point playerSpawn) {
+    public Maze(boolean[][] maze, ResourcePack resourcePack, ArrayList<Point> mobs, ArrayList<Teleporter> teleporters, Point finalBlock, Point playerSpawn) {
         this(maze, resourcePack, finalBlock, playerSpawn);
-
-        this.swordSpawns = swords;
-        generateSwords(swords);
-
         this.mobSpawns = mobs;
         generateMobs(mobs);
         this.teleporters = teleporters;
@@ -71,14 +67,12 @@ public class Maze extends GridPane {
 
     public void end() {
 
-        for (Mob mob : mobs) {
-            mob.reset();
-        }
+        resetMobs();
+        resetItems();
 
         SceneLibrary.getPreviewStage().close();
         SceneLibrary.setPreviewStage(null);
 
-        generateSwords(swordSpawns);
         player.reset();
     }
 
@@ -101,10 +95,67 @@ public class Maze extends GridPane {
         }
     }
 
+    public void resetMobs() {
+        for (Mob mob : mobs) {
+            mob.reset();
+        }
+    }
+
+    public void changeMobSpeed(int speed) {
+        for (Mob mob : mobs) {
+            mob.setSpeed(speed);
+        }
+    }
+
+    public void resetItems() {
+        for (Item item : items) {
+            item.reset();
+        }
+    }
+
     public void addSword(Point...swords) {
         for (Point sword : swords) {
-            this.swordSpawns.add(sword);
-            this.swords.add(new Sword(sword, this));
+            this.items.add(new Sword(sword, this));
+        }
+    }
+
+    public void addSwords(ArrayList<Point> points) {
+        for (Point point : points) {
+            //MIGHT GET DUPLICATE SWORD ADDED HERE.
+            Sword sword = new Sword(point, this);
+            this.items.add(sword);
+        }
+    }
+
+    public void addBoots(ArrayList<Point> points) {
+        for (Point point : points) {
+            //MIGHT GET DUPLICATE SWORD ADDED HERE.
+            Boot boot = new Boot(point, this);
+            this.items.add(boot);
+        }
+    }
+
+    public void addArmor(ArrayList<Point> points) {
+        for (Point point : points) {
+            //MIGHT GET DUPLICATE SWORD ADDED HERE.
+            Armor armor = new Armor(point, this);
+            this.items.add(armor);
+        }
+    }
+
+    public void addHealthPotion(ArrayList<Point> points) {
+        for (Point point : points) {
+            //MIGHT GET DUPLICATE SWORD ADDED HERE.
+            HealthPotion healthPotion = new HealthPotion(point, this);
+            this.items.add(healthPotion);
+        }
+    }
+
+    public void addInvisPotion(ArrayList<Point> points) {
+        for (Point point : points) {
+            //MIGHT GET DUPLICATE SWORD ADDED HERE.
+            InvisPotion invisPotion = new InvisPotion(point, this);
+            this.items.add(invisPotion);
         }
     }
 
@@ -118,12 +169,6 @@ public class Maze extends GridPane {
         }
     }
 
-    public void generateSwords(ArrayList<Point> swords) {
-        for (Point sword : swords) {
-            this.swords.add(new Sword(sword, this));
-        }
-    }
-
     public void startMobs() {
         for (Mob mob : mobs)
             mob.startAnimationTimer();
@@ -134,7 +179,7 @@ public class Maze extends GridPane {
     }
 
     public void updatePlayerUI() {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
             add(new Rectangle(25, 25, Color.WHITE), 24, i);
 
         for (int i = 0; i < player.getHealth(); i++) {
@@ -142,6 +187,7 @@ public class Maze extends GridPane {
         }
 
         if (player.hasSword()) add(new ImageView(ResourcePack.getSword()), 24, player.getHealth() + 1);
+        if (player.hasBoots()) add(new ImageView(ResourcePack.getBoots()), 24, player.getHealth() + 2);
 
     }
 
@@ -151,10 +197,6 @@ public class Maze extends GridPane {
 
     public ArrayList<Mob> getMobs() {
         return mobs;
-    }
-
-    public ArrayList<Sword> getSwords() {
-        return swords;
     }
 
     public ArrayList<Teleporter> getTeleporters() {
@@ -171,7 +213,7 @@ public class Maze extends GridPane {
 
     public ArrayList<Point> getMobSpawns() { return mobSpawns; }
 
-    public ArrayList<Point> getSwordSpawns() { return swordSpawns; }
-
-
+    public ArrayList<Item> getItems() {
+        return items;
+    }
 }

@@ -7,6 +7,8 @@ import javafx.scene.input.KeyEvent;
 public class PlayerModel extends Character {
 
     private boolean hasSword = false;
+    private boolean hasBoots = false;
+
     private int health;
 
     public int getHealth() { return health; }
@@ -21,13 +23,32 @@ public class PlayerModel extends Character {
         getMaze().updatePlayerUI();
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     public void addSword() {
         hasSword = true;
+        getMaze().updatePlayerUI();
     }
 
     public void removeSword() {
         hasSword = false;
         getMaze().updatePlayerUI();
+    }
+
+    public void addBoots() {
+        hasBoots = true;
+        getMaze().updatePlayerUI();
+    }
+
+    public void removeBoots() {
+        hasBoots = false;
+        getMaze().updatePlayerUI();
+    }
+
+    public boolean hasBoots() {
+        return hasBoots;
     }
 
     public boolean hasSword() {
