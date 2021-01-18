@@ -95,6 +95,16 @@ public class Maze extends GridPane {
         }
     }
 
+    public void startMobs() {
+        for (Mob mob : mobs)
+            mob.startAnimationTimer();
+    }
+
+    public void stopMobs() {
+        for (Mob mob : mobs)
+            mob.stopAnimationTimer();
+    }
+
     public void resetMobs() {
         for (Mob mob : mobs) {
             mob.reset();
@@ -167,11 +177,6 @@ public class Maze extends GridPane {
         for (Point mobSpawn : mobSpawns) {
             mobs.add(new Mob(mobSpawn, mobBlock, this));
         }
-    }
-
-    public void startMobs() {
-        for (Mob mob : mobs)
-            mob.startAnimationTimer();
     }
 
     public PlayerModel getPlayer() {
