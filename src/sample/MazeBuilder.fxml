@@ -8,7 +8,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Region?>
@@ -25,15 +24,10 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#previewGame" text="Play" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Saves">
               <items>
-                <MenuItem mnemonicParsing="false" text="Custom Save #1" />
-                  <MenuItem mnemonicParsing="false" text="Custom Save #2" />
-                  <MenuItem mnemonicParsing="false" text="Custom Save #3" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#playDefaultMazeOne" text="Default Maze #1" />
                   <MenuItem mnemonicParsing="false" onAction="#playDefaultMazeTwo" text="Default Maze #2" />
                   <MenuItem mnemonicParsing="false" onAction="#playDefaultMazeThree" text="Default Maze #3" />
