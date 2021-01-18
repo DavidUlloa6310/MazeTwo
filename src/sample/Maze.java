@@ -118,7 +118,10 @@ public class Maze extends GridPane {
     }
 
     public void resetItems() {
+
         for (Item item : items) {
+            if (!item.isGone())
+                getChildren().remove(item);
             item.reset();
         }
     }
@@ -131,41 +134,31 @@ public class Maze extends GridPane {
 
     public void addSwords(ArrayList<Point> points) {
         for (Point point : points) {
-            //MIGHT GET DUPLICATE SWORD ADDED HERE.
-            Sword sword = new Sword(point, this);
-            this.items.add(sword);
+            this.items.add(new Sword(point, this));
         }
     }
 
     public void addBoots(ArrayList<Point> points) {
         for (Point point : points) {
-            //MIGHT GET DUPLICATE SWORD ADDED HERE.
-            Boot boot = new Boot(point, this);
-            this.items.add(boot);
+            this.items.add(new Boot(point, this));
         }
     }
 
     public void addArmor(ArrayList<Point> points) {
         for (Point point : points) {
-            //MIGHT GET DUPLICATE SWORD ADDED HERE.
-            Armor armor = new Armor(point, this);
-            this.items.add(armor);
+            this.items.add(new Armor(point, this));
         }
     }
 
     public void addHealthPotion(ArrayList<Point> points) {
         for (Point point : points) {
-            //MIGHT GET DUPLICATE SWORD ADDED HERE.
-            HealthPotion healthPotion = new HealthPotion(point, this);
-            this.items.add(healthPotion);
+            this.items.add(new HealthPotion(point, this));
         }
     }
 
     public void addInvisPotion(ArrayList<Point> points) {
         for (Point point : points) {
-            //MIGHT GET DUPLICATE SWORD ADDED HERE.
-            InvisPotion invisPotion = new InvisPotion(point, this);
-            this.items.add(invisPotion);
+            this.items.add(new InvisPotion(point, this));
         }
     }
 

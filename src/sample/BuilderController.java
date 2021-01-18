@@ -342,6 +342,22 @@ public class BuilderController {
         SceneLibrary.previewGame(currentMaze);
     }
 
+    public void playDefaultMazeOne() {
+        SceneLibrary.previewGame(0);
+    }
+
+    public void playDefaultMazeTwo() {
+        SceneLibrary.previewGame(1);
+    }
+
+    public void playDefaultMazeThree() {
+        SceneLibrary.previewGame(2);
+    }
+
+    public void playDefaultMazeFour() {
+        SceneLibrary.previewGame(3);
+    }
+
     @FXML
     public void About() {
         JOP.msg("You can build the maze by left clicking to put blocked area, right click to remove.\nEvery maze has to have a spawn and exit, so click buttons on the bottom to select each.\nSame applies to mobs and swords. The image on the bottom left shows selected item." +

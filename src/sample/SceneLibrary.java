@@ -73,9 +73,14 @@ public abstract class SceneLibrary {
 
     public static void previewGame(int index) {
         if (index < mazes.size()) {
-            Scene activeScene = setUpScene(mazes.get(index));
-            mazes.get(index).startMobs();
-            primaryStage.setScene(activeScene);
+            Maze maze = SceneLibrary.mazes.get(index);
+            Scene scene = setUpScene(maze);
+            SceneLibrary.setPreviewStage(new Stage());
+            previewStage.setTitle("Playing Maze");
+            previewStage.setResizable(false);
+            SceneLibrary.previewStage.setScene(scene);
+            previewStage.show();
+            maze.startMobs();
         }
     }
 
