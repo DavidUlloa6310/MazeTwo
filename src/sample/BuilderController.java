@@ -30,6 +30,7 @@ public class BuilderController {
     private GraphicsContext gc;
 
     private final ObservableList<String> resourcePacks = FXCollections.observableArrayList("Grass", "Cave", "Nether", "End");
+    private Maze[] customMazes = new Maze[3];
 
     private boolean[][] maze = generateArray();
     private ResourcePack resourcePack = ResourcePack.GRASS;
@@ -330,16 +331,44 @@ public class BuilderController {
             JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
             return;
         }
+        SceneLibrary.previewGame(getCurrentMaze());
+    }
 
-        Maze currentMaze = new Maze(maze, resourcePack, mobSpawns, teleporters, exitBlock, playerSpawn);
+    public void save() {
+        int save = 4;
+        while (save < 1 || save > 3) {
+            try {
+                save = Integer.parseInt(JOP.input("Please enter under which save you want to have the maze (1, 2, or 3)."));
+            } catch(Exception NumberFormatException) {
+                save = 4;
+            }
+        }
 
-        currentMaze.addSwords(swordSpawns);
-        currentMaze.addBoots(bootSpawns);
-        currentMaze.addArmor(armorSpawns);
-        currentMaze.addHealthPotion(healthPotionSpawns);
-        currentMaze.addInvisPotion(invisPotionSpawns);
+        int index = save - 1;
+        if (playerSpawn == null || exitBlock == null) {
+            JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
+            return;
+        }
+        customMazes[index] = getCurrentMaze();
 
-        SceneLibrary.previewGame(currentMaze);
+    }
+
+    public void playCustomMazeOne() {
+        if (customMazes[0] != null) {
+            SceneLibrary.previewGame(customMazes[0]);
+        }
+    }
+
+    public void playCustomMazeTwo() {
+        if (customMazes[1] != null) {
+            SceneLibrary.previewGame(customMazes[1]);
+        }
+    }
+
+    public void playCustomMazeThree() {
+        if (customMazes[2] != null) {
+            SceneLibrary.previewGame(customMazes[2]);
+        }
     }
 
     public void playDefaultMazeOne() {
@@ -358,10 +387,25 @@ public class BuilderController {
         SceneLibrary.previewGame(SceneLibrary.getMazes().get(3));
     }
 
-    @FXML
-    public void About() {
+    public Maze getCurrentMaze() {
+        Maze currentMaze = new Maze(maze, resourcePack, mobSpawns, teleporters, exitBlock, playerSpawn);
+
+        currentMaze.addSwords(swordSpawns);
+        currentMaze.addBoots(bootSpawns);
+        currentMaze.addArmor(armorSpawns);
+        currentMaze.addHealthPotion(healthPotionSpawns);
+        currentMaze.addInvisPotion(invisPotionSpawns);
+
+        return currentMaze;
+    }
+
+    public void aboutUI() {
         JOP.msg("You can build the maze by left clicking to put blocked area, right click to remove.\nEvery maze has to have a spawn and exit, so click buttons on the bottom to select each.\nSame applies to mobs and swords. The image on the bottom left shows selected item." +
-                "\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.");
+                "\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.\n To save maze, click File, Save, and enter what save you want to have.\n To play saved mazes, click Saves, and select which maze. There are also premade mazes that can be played.");
+    }
+
+    public void aboutItems() {
+        JOP.msg("Sword: If you run into the mob, and have a sword, the mob dies.\nArmor: Regens health and increases max health to 4 hearts.\nBoots: Slows down mob speed.\nHealth Potion: Heals player.\nInvis Potion: Makes mobs stop chasing player.");
     }
 
 }
