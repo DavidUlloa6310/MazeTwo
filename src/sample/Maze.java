@@ -120,8 +120,7 @@ public class Maze extends GridPane {
     public void resetItems() {
 
         for (Item item : items) {
-            if (!item.isGone())
-                getChildren().remove(item);
+            getChildren().remove(item);
             item.reset();
         }
     }
@@ -189,6 +188,25 @@ public class Maze extends GridPane {
 
     }
 
+    public Maze cloneMaze() {
+        Maze maze = new Maze(this.maze, getWalkablePath(), getBlockedPath(), getMobBlock(), new Point(getFinalX(), getFinalY()), getPlayerSpawn());
+        maze.setTeleporters(this.getTeleporters());
+        for (Teleporter teleporter : teleporters) {
+            teleporter.setMaze(maze);
+        }
+
+        maze.setItems(getItems());
+
+        for (Item item : getItems()) {
+            item.setMaze(maze);
+        }
+
+        maze.resetItems();
+
+        maze.generateMobs(getMobSpawns());
+        return maze;
+    }
+
     public boolean[][] getMaze() {
         return maze;
     }
@@ -213,5 +231,69 @@ public class Maze extends GridPane {
 
     public ArrayList<Item> getItems() {
         return items;
+    }
+
+    public Image getWalkablePath() {
+        return walkablePath;
+    }
+
+    public Image getBlockedPath() {
+        return blockedPath;
+    }
+
+    public Image getMobBlock() {
+        return mobBlock;
+    }
+
+    public Point getPlayerSpawn() {
+        return playerSpawn;
+    }
+
+    public void setTeleporters(ArrayList<Teleporter> teleporters) {
+        this.teleporters = teleporters;
+    }
+
+    public void setMaze(boolean[][] maze) {
+        this.maze = maze;
+    }
+
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
+
+    public void setWalkablePath(Image walkablePath) {
+        this.walkablePath = walkablePath;
+    }
+
+    public void setBlockedPath(Image blockedPath) {
+        this.blockedPath = blockedPath;
+    }
+
+    public void setMobBlock(Image mobBlock) {
+        this.mobBlock = mobBlock;
+    }
+
+    public void setPlayerSpawn(Point playerSpawn) {
+        this.playerSpawn = playerSpawn;
+    }
+
+    public void setFinalX(int finalX) {
+        this.finalX = finalX;
+    }
+
+    public void setFinalY(int finalY) {
+        this.finalY = finalY;
+    }
+
+    public void setMobs(ArrayList<Mob> mobs) {
+        this.mobs = mobs;
+    }
+
+    public void setMobSpawns(ArrayList<Point> mobSpawns) {
+        this.mobSpawns = mobSpawns;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
     }
 }

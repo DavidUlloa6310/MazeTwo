@@ -343,19 +343,19 @@ public class BuilderController {
     }
 
     public void playDefaultMazeOne() {
-        SceneLibrary.previewGame(0);
+        SceneLibrary.previewGame(SceneLibrary.getMazes().get(0));
     }
 
     public void playDefaultMazeTwo() {
-        SceneLibrary.previewGame(1);
+        SceneLibrary.previewGame(SceneLibrary.getMazes().get(1));
     }
 
     public void playDefaultMazeThree() {
-        SceneLibrary.previewGame(2);
+        SceneLibrary.previewGame(SceneLibrary.getMazes().get(2));
     }
 
     public void playDefaultMazeFour() {
-        SceneLibrary.previewGame(3);
+        SceneLibrary.previewGame(SceneLibrary.getMazes().get(3));
     }
 
     @FXML

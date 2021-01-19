@@ -7,6 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public abstract class SceneLibrary {
 
     private static Stage primaryStage;
@@ -71,20 +73,10 @@ public abstract class SceneLibrary {
     }
     public static Stage getPreviewStage() { return previewStage; }
 
-    public static void previewGame(int index) {
-        if (index < mazes.size()) {
-            Maze maze = SceneLibrary.mazes.get(index);
-            Scene scene = setUpScene(maze);
-            SceneLibrary.setPreviewStage(new Stage());
-            previewStage.setTitle("Playing Maze");
-            previewStage.setResizable(false);
-            SceneLibrary.previewStage.setScene(scene);
-            previewStage.show();
-            maze.startMobs();
-        }
-    }
-
     public static void previewGame(Maze maze) {
+
+        maze = maze.cloneMaze();
+
         Scene scene = setUpScene(maze);
         SceneLibrary.setPreviewStage(new Stage());
         previewStage.setTitle("Playing Maze");

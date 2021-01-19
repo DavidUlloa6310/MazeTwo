@@ -82,4 +82,8 @@ public class Character extends ImageView {
     public Maze getMaze() {
         return maze;
     }
+
+    public void setMaze(Maze maze) {
+        this.maze = maze;
+    }
 }

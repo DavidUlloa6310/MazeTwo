@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" build-on-make="true" name="MazeBuilder">
+    <output-path>$PROJECT_DIR$/out/artifacts/MazeBuilder</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="sample.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="Maze Builder" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="MazeBuilder.jar">
+        <element id="module-output" name="MazeBuilder" />
+      </element>
+    </root>
+  </artifact>
+</component>

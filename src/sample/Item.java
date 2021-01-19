@@ -31,6 +31,10 @@ public abstract class Item extends ImageView {
         maze.add(this, x, y);
     }
 
+    public void setMaze(Maze maze) {
+        this.maze = maze;
+    }
+
     public void reset() {
         maze.add(this, getCoordX(), getCoordY());
         setGone(false);
