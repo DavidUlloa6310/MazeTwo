@@ -20,6 +20,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
             </items>
           </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#clearMaze" text="Clear" />
+                  <MenuItem mnemonicParsing="false" onAction="#changeDimensions" text="Change Dimensions" />
+            </items>
+          </Menu>
             <Menu mnemonicParsing="false" text="Saves">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#playCustomMazeOne" text="Custom Maze #1" />
@@ -32,11 +38,6 @@
                   <MenuItem mnemonicParsing="false" onAction="#playDefaultMazeFour" text="Default Maze #4" />
               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#clearMaze" text="Clear" />
-            </items>
-          </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#aboutUI" text="About UI" />

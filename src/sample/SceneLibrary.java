@@ -91,7 +91,7 @@ public abstract class SceneLibrary {
     }
 
     public static Scene setUpScene(Maze maze) {
-        Scene scene = new Scene(maze, 625, 400);
+        Scene scene = new Scene(maze, (maze.getMaze()[0].length + 1) * Main.getTileSize(), maze.getMaze().length * Main.getTileSize());
         scene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
 
             if (key.getCode() == KeyCode.W) {

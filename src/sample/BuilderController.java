@@ -75,7 +75,7 @@ public class BuilderController {
         int xBox = (int) pixelX / 25;
         int yBox = (int) pixelY / 25;
 
-        if (xBox > 23 || xBox < 0 || yBox < 0 || yBox > 15)
+        if (xBox > Main.getWidth() - 1 || xBox < 0 || yBox < 0 || yBox > Main.getHeight() - 1)
             return;
 
         switch(activeClick) {
@@ -161,7 +161,7 @@ public class BuilderController {
         int xBox = (int) pixelX / 25;
         int yBox = (int) pixelY / 25;
 
-        if (activeClick == ActiveClick.DEFAULT &&  xBox < 24 && yBox < 16 && xBox > -1 && yBox > -1) {
+        if (activeClick == ActiveClick.DEFAULT &&  xBox < Main.getWidth() && yBox < Main.getHeight() && xBox > -1 && yBox > -1) {
             maze[yBox][xBox] = false;
             gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
         }
@@ -169,8 +169,12 @@ public class BuilderController {
     }
 
     public void resetCanvas() {
-        for (int r = 0; r < 16; r++) {
-            for (int c = 0; c < 24; c++) {
+
+        canvas.setWidth(Main.getWidth() * 25);
+        canvas.setHeight(Main.getHeight() * 25);
+
+        for (int r = 0; r < Main.getHeight(); r++) {
+            for (int c = 0; c < Main.getWidth(); c++) {
                 gc.drawImage(resourcePack.getWalkablePath(), c * 25, r * 25);
             }
         }
@@ -178,8 +182,8 @@ public class BuilderController {
 
     public void repaintCanvas() {
 
-        for (int r = 0; r < 16; r++) {
-            for (int c = 0; c < 24; c++) {
+        for (int r = 0; r < Main.getHeight(); r++) {
+            for (int c = 0; c < Main.getWidth(); c++) {
                 if (maze[r][c]) gc.drawImage(resourcePack.getBlockedPath(), c * 25, r * 25); else gc.drawImage(resourcePack.getWalkablePath(), c * 25, r * 25);
             }
         }
@@ -226,6 +230,21 @@ public class BuilderController {
         armorSpawns = new ArrayList<>();
         healthPotionSpawns = new ArrayList<>();
         invisPotionSpawns = new ArrayList<>();
+    }
+
+    public void changeDimensions() {
+        String input = "LMAOO";
+        while (input.toLowerCase().charAt(0) != 'y') {
+            input = JOP.input("Changing the dimensions will delete current maze.\nPlease type 'y' if you accept, 'n' if you don't");
+            if (input.toLowerCase().charAt(0) == 'n')
+                return;
+        }
+
+        Main.setWidth();
+        Main.setHeight();
+
+        clearMaze();
+
     }
 
     public void placeSpawn() {
@@ -309,9 +328,9 @@ public class BuilderController {
     }
 
     public boolean[][] generateArray() {
-        boolean[][] array = new boolean[16][24];
-        for (int r = 0; r < 16; r++) {
-            for (int c = 0; c < 24; c++) {
+        boolean[][] array = new boolean[Main.getHeight()][Main.getWidth()];
+        for (int r = 0; r < array.length; r++) {
+            for (int c = 0; c < array[0].length; c++) {
                 array[r][c] = false;
             }
         }
