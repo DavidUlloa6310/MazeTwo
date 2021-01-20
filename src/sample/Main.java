@@ -34,9 +34,9 @@ public class Main extends Application {
 
     public static void setWidth() {
         width = 0;
-        while (width <= 5) {
+        while (width <= 5 || width >= 33) {
             try {
-                width = Integer.parseInt(JOP.input("Please enter the width of your mazes (Must be greater than 5)"));
+                width = Integer.parseInt(JOP.input("Please enter the width of your mazes (Min: 6, Max: 32)"));
             } catch (Exception e) {
                 width = 0;
             }
@@ -45,9 +45,9 @@ public class Main extends Application {
 
     public static void setHeight() {
         height = 0;
-        while (height <= 5) {
+        while (height <= 5 || height >= 17) {
             try {
-                height = Integer.parseInt(JOP.input("Please enter the height of your mazes (Must be greater than 5)"));
+                height = Integer.parseInt(JOP.input("Please enter the height of your mazes (Min: 6, Max: 16)"));
             } catch (Exception e) {
                 height = 0;
             }

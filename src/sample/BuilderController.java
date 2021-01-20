@@ -57,6 +57,7 @@ public class BuilderController {
         gc = canvas.getGraphicsContext2D();
         resetCanvas();
         selectorImage.setImage(resourcePack.getBlockedPath());
+        aboutUI();
     }
 
     public void clickCanvas(MouseEvent e) {
@@ -72,8 +73,8 @@ public class BuilderController {
     }
 
     public void onMouseLeftClick(double pixelX, double pixelY) {
-        int xBox = (int) pixelX / 25;
-        int yBox = (int) pixelY / 25;
+        int xBox = (int) pixelX / Main.getTileSize();
+        int yBox = (int) pixelY / Main.getTileSize();
 
         if (xBox > Main.getWidth() - 1 || xBox < 0 || yBox < 0 || yBox > Main.getHeight() - 1)
             return;
@@ -81,15 +82,15 @@ public class BuilderController {
         switch(activeClick) {
             case DEFAULT:
                 maze[yBox][xBox] = true;
-                gc.drawImage(resourcePack.getBlockedPath(), xBox * 25, yBox * 25);
+                gc.drawImage(resourcePack.getBlockedPath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 break;
             case SPAWN:
                 if (playerSpawn == null) {
                     playerSpawn = new Point(xBox, yBox);
-                    gc.drawImage(ResourcePack.getStartBlock(), xBox * 25, yBox * 25);
+                    gc.drawImage(ResourcePack.getStartBlock(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else if (playerSpawn.getX() == xBox && playerSpawn.getY() == yBox) {
                     playerSpawn = null;
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
                     JOP.msg("There can be only one player spawn. \n Please unselect the existing spawn");
                 }
@@ -97,59 +98,59 @@ public class BuilderController {
             case ENDBLOCK:
                 if (exitBlock == null) {
                     exitBlock = new Point(xBox, yBox);
-                    gc.drawImage(ResourcePack.getEndBlock(), xBox * 25, yBox * 25);
+                    gc.drawImage(ResourcePack.getEndBlock(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else if (exitBlock.getX() == xBox && exitBlock.getY() == yBox) {
                     exitBlock = null;
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
                     JOP.msg("There can be only one exit block. \n Please unselect the existing exit block");
                 }
                 break;
             case MOBS:
                 if (removeFromList(xBox, yBox, mobSpawns)) {
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
-                    gc.drawImage(resourcePack.getMobBlock(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getMobBlock(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                     mobSpawns.add(new Point(xBox, yBox));
                 }
                 break;
             case SWORDS:
                 if (removeFromList(xBox, yBox, swordSpawns)) {
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
-                    gc.drawImage(ResourcePack.getSword(), xBox * 25, yBox * 25);
+                    gc.drawImage(ResourcePack.getSword(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                     swordSpawns.add(new Point(xBox, yBox));
                 }
                 break;
             case BOOTS:
                 if (removeFromList(xBox, yBox, bootSpawns)) {
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
-                    gc.drawImage(ResourcePack.getBoots(), xBox * 25, yBox * 25);
+                    gc.drawImage(ResourcePack.getBoots(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                     bootSpawns.add(new Point(xBox, yBox));
                 }
                 break;
             case ARMOR:
                 if (removeFromList(xBox, yBox, armorSpawns)) {
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
-                    gc.drawImage(ResourcePack.getArmor(), xBox * 25, yBox * 25);
+                    gc.drawImage(ResourcePack.getArmor(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                     armorSpawns.add(new Point(xBox, yBox));
                 }
                 break;
             case INVISPOTION:
                 if (removeFromList(xBox, yBox, invisPotionSpawns)) {
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
-                    gc.drawImage(ResourcePack.getInvisPotion(), xBox * 25, yBox * 25);
+                    gc.drawImage(ResourcePack.getInvisPotion(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                     invisPotionSpawns.add(new Point(xBox, yBox));
                 }
                 break;
             case HEALTHPOTION:
                 if (removeFromList(xBox, yBox, healthPotionSpawns)) {
-                    gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+                    gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else {
-                    gc.drawImage(ResourcePack.getHealthPotion(), xBox * 25, yBox * 25);
+                    gc.drawImage(ResourcePack.getHealthPotion(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                     healthPotionSpawns.add(new Point(xBox, yBox));
                 }
                 break;
@@ -158,24 +159,24 @@ public class BuilderController {
 
     public void onMouseRightClick(double pixelX, double pixelY) {
 
-        int xBox = (int) pixelX / 25;
-        int yBox = (int) pixelY / 25;
+        int xBox = (int) pixelX / Main.getTileSize();
+        int yBox = (int) pixelY / Main.getTileSize();
 
         if (activeClick == ActiveClick.DEFAULT &&  xBox < Main.getWidth() && yBox < Main.getHeight() && xBox > -1 && yBox > -1) {
             maze[yBox][xBox] = false;
-            gc.drawImage(resourcePack.getWalkablePath(), xBox * 25, yBox * 25);
+            gc.drawImage(resourcePack.getWalkablePath(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
         }
 
     }
 
     public void resetCanvas() {
 
-        canvas.setWidth(Main.getWidth() * 25);
-        canvas.setHeight(Main.getHeight() * 25);
+        canvas.setWidth(Main.getWidth() * Main.getTileSize());
+        canvas.setHeight(Main.getHeight() * Main.getTileSize());
 
         for (int r = 0; r < Main.getHeight(); r++) {
             for (int c = 0; c < Main.getWidth(); c++) {
-                gc.drawImage(resourcePack.getWalkablePath(), c * 25, r * 25);
+                gc.drawImage(resourcePack.getWalkablePath(), c * Main.getTileSize(), r * Main.getTileSize());
             }
         }
     }
@@ -184,19 +185,19 @@ public class BuilderController {
 
         for (int r = 0; r < Main.getHeight(); r++) {
             for (int c = 0; c < Main.getWidth(); c++) {
-                if (maze[r][c]) gc.drawImage(resourcePack.getBlockedPath(), c * 25, r * 25); else gc.drawImage(resourcePack.getWalkablePath(), c * 25, r * 25);
+                if (maze[r][c]) gc.drawImage(resourcePack.getBlockedPath(), c * Main.getTileSize(), r * Main.getTileSize()); else gc.drawImage(resourcePack.getWalkablePath(), c * Main.getTileSize(), r * Main.getTileSize());
             }
         }
 
-        if (playerSpawn != null) gc.drawImage(ResourcePack.getStartBlock(), playerSpawn.getX() * 25, playerSpawn.getY() * 25);
-        if (exitBlock != null) gc.drawImage(ResourcePack.getEndBlock(), exitBlock.getX() * 25, exitBlock.getY() * 25);
+        if (playerSpawn != null) gc.drawImage(ResourcePack.getStartBlock(), playerSpawn.getX() * Main.getTileSize(), playerSpawn.getY() * Main.getTileSize());
+        if (exitBlock != null) gc.drawImage(ResourcePack.getEndBlock(), exitBlock.getX() * Main.getTileSize(), exitBlock.getY() * Main.getTileSize());
 
         for (Point sword : swordSpawns) {
-            gc.drawImage(ResourcePack.getSword(), sword.getX() * 25, sword.getY() * 25);
+            gc.drawImage(ResourcePack.getSword(), sword.getX() * Main.getTileSize(), sword.getY() * Main.getTileSize());
         }
 
         for (Point mob : mobSpawns) {
-            gc.drawImage(resourcePack.getMobBlock(), mob.getX() * 25, mob.getY() * 25);
+            gc.drawImage(resourcePack.getMobBlock(), mob.getX() * Main.getTileSize(), mob.getY() * Main.getTileSize());
         }
     }
 
@@ -424,7 +425,7 @@ public class BuilderController {
 
     public void aboutUI() {
         JOP.msg("You can build the maze by left clicking to put blocked area, right click to remove.\nEvery maze has to have a spawn and exit, so click buttons on the bottom to select each.\nSame applies to mobs and swords. The image on the bottom left shows selected item." +
-                "\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.\n To save maze, click File, Save, and enter what save you want to have.\n To play saved mazes, click Saves, and select which maze. There are also premade mazes that can be played." +
+                "\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.\nTo change the dimensions, go to Edit, Change Dimensions\nTo save maze, click File, Save, and enter what save you want to have.\nTo play saved mazes, click Saves, and select which maze. There are also premade mazes that can be played." +
                 "\nTo select the resource pack, select from drop down menu and click the update button.");
     }
 
