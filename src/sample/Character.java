@@ -28,7 +28,7 @@ public class Character extends ImageView {
     }
 
     public void moveRight() {
-        if (this.x != width - 1 && !maze.getMaze()[this.y][this.x + 1]) {
+        if (this.x != maze.getMaze()[0].length - 1 && !maze.getMaze()[this.y][this.x + 1]) {
             this.x++;
             this.maze.getChildren().remove(this);
             this.maze.add(this, x, y);
@@ -37,7 +37,7 @@ public class Character extends ImageView {
     }
 
     public void moveDown() {
-        if (this.y != height - 1 && !maze.getMaze()[this.y + 1][this.x]) {
+        if (this.y != maze.getMaze().length - 1 && !maze.getMaze()[this.y + 1][this.x]) {
             this.y++;
             this.maze.getChildren().remove(this);
             this.maze.add(this, x, y);

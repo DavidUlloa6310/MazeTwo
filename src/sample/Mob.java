@@ -11,7 +11,9 @@ import javax.swing.*;
 public class Mob extends Character {
     private boolean isDead = false;
     private int speed = 2;
+
     private AnimationTimer animationTimer;
+
     public boolean isDead() { return isDead; }
     public void setDead(boolean isDead) { this.isDead = isDead; }
 
@@ -103,6 +105,8 @@ public class Mob extends Character {
     public void startAnimationTimer() {
         animationTimer.start();
     }
-    public void stopAnimationTimer() { animationTimer.stop(); }
+    public void stopAnimationTimer() {
+        animationTimer.stop();
+    }
 
 }

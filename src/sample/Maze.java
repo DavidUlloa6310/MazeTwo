@@ -177,14 +177,14 @@ public class Maze extends GridPane {
 
     public void updatePlayerUI() {
         for (int i = 0; i < 10; i++)
-            add(new Rectangle(Main.getTileSize(), Main.getTileSize(), Color.WHITE), Main.getWidth(), i);
+            add(new Rectangle(Main.getTileSize(), Main.getTileSize(), Color.WHITE), maze[0].length, i);
 
         for (int i = 0; i < player.getHealth(); i++) {
-            add(new ImageView(ResourcePack.getHeart()), Main.getWidth(), i);
+            add(new ImageView(ResourcePack.getHeart()), maze[0].length, i);
         }
 
-        if (player.hasSword()) add(new ImageView(ResourcePack.getSword()), Main.getWidth(), player.getHealth() + 1);
-        if (player.hasBoots()) add(new ImageView(ResourcePack.getBoots()), Main.getWidth(), player.getHealth() + 2);
+        if (player.hasSword()) add(new ImageView(ResourcePack.getSword()), maze[0].length, player.getHealth() + 1);
+        if (player.hasBoots()) add(new ImageView(ResourcePack.getBoots()), maze[0].length, player.getHealth() + 2);
 
     }
 
