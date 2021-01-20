@@ -29,7 +29,7 @@ public class BuilderController {
 
     private GraphicsContext gc;
 
-    private final ObservableList<String> resourcePacks = FXCollections.observableArrayList("Grass", "Cave", "Nether", "End");
+    private final ObservableList<String> resourcePacks = FXCollections.observableArrayList("Grass", "Cave", "Nether", "End", "Snow", "Mushroom");
     private Maze[] customMazes = new Maze[3];
 
     private boolean[][] maze = generateArray();
@@ -205,6 +205,10 @@ public class BuilderController {
             resourcePack = ResourcePack.NETHER;
         } else if (resourceChoiceBox.getValue().equals("End")) {
             resourcePack = ResourcePack.END;
+        } else if (resourceChoiceBox.getValue().equals("Snow")) {
+            resourcePack = ResourcePack.SNOW;
+        } else if (resourceChoiceBox.getValue().equals("Mushroom")) {
+            resourcePack = ResourcePack.MUSHROOM;
         }
 
         selectorImage.setImage(resourcePack.getBlockedPath());
@@ -401,7 +405,8 @@ public class BuilderController {
 
     public void aboutUI() {
         JOP.msg("You can build the maze by left clicking to put blocked area, right click to remove.\nEvery maze has to have a spawn and exit, so click buttons on the bottom to select each.\nSame applies to mobs and swords. The image on the bottom left shows selected item." +
-                "\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.\n To save maze, click File, Save, and enter what save you want to have.\n To play saved mazes, click Saves, and select which maze. There are also premade mazes that can be played.");
+                "\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.\n To save maze, click File, Save, and enter what save you want to have.\n To play saved mazes, click Saves, and select which maze. There are also premade mazes that can be played." +
+                "\nTo select the resource pack, select from drop down menu and click the update button.");
     }
 
     public void aboutItems() {

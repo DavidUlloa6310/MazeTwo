@@ -6,7 +6,9 @@ public enum ResourcePack {
     GRASS("images/blocks/grassBlock.png", "images/blocks/woodPlank.png", "images/characters/creeper.png"),
     CAVE("images/blocks/stoneBrickBlock.png", "images/blocks/lavaBlock.png", "images/characters/spider.png"),
     NETHER("images/blocks/netherrack.png", "images/blocks/netherBrick.png", "images/characters/blaze.png"),
-    END("images/blocks/endstone.png", "images/blocks/obsidian.png", "images/characters/enderman.png");
+    END("images/blocks/endstone.png", "images/blocks/obsidian.png", "images/characters/enderman.png"),
+    MUSHROOM("images/blocks/myceliumBlock.png", "images/blocks/mushroomBlock.png", "images/characters/zombie.png"),
+    SNOW("images/blocks/snowBlock.png", "images/blocks/spruceWoodBlock.png", "images/characters/wolf.png");
 
     private final Image walkablePath;
     private final Image blockedPath;
