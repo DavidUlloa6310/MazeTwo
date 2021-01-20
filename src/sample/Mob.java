@@ -103,6 +103,7 @@ public class Mob extends Character {
     }
 
     public void startAnimationTimer() {
+        if (!isDead)
         animationTimer.start();
     }
     public void stopAnimationTimer() {
