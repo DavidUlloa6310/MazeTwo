@@ -94,8 +94,6 @@ public class Mob extends Character {
                     getMaze().end();
                 }
             }
-
-            if (this.getCoordX() == )
         }
         return false;
     }
