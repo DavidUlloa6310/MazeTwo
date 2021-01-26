@@ -58,6 +58,7 @@ public class BuilderController {
         resetCanvas();
         selectorImage.setImage(resourcePack.getBlockedPath());
         aboutUI();
+        JOP.msg("If you want to know about what each item does, go to Help, click About Items.\nIf you need help playing the game, click Help, About UI.");
     }
 
     public void clickCanvas(MouseEvent e) {
@@ -195,6 +196,22 @@ public class BuilderController {
 
         for (Point sword : swordSpawns) {
             gc.drawImage(ResourcePack.getSword(), sword.getX() * Main.getTileSize(), sword.getY() * Main.getTileSize());
+        }
+
+        for (Point healthPotion : healthPotionSpawns) {
+            gc.drawImage(ResourcePack.getHealthPotion(), healthPotion.getX() * Main.getTileSize(), healthPotion.getY() * Main.getTileSize());
+        }
+
+        for (Point invisPotion : invisPotionSpawns) {
+            gc.drawImage(ResourcePack.getInvisPotion(), invisPotion.getX() * Main.getTileSize(), invisPotion.getY() * Main.getTileSize());
+        }
+
+        for (Point boots : bootSpawns) {
+            gc.drawImage(ResourcePack.getBoots(), boots.getX() * Main.getTileSize(), boots.getY() * Main.getTileSize());
+        }
+
+        for (Point armor : armorSpawns) {
+            gc.drawImage(ResourcePack.getArmor(), armor.getX() * Main.getTileSize(), armor.getY() * Main.getTileSize());
         }
 
         for (Point mob : mobSpawns) {
