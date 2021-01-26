@@ -10,19 +10,24 @@ public enum ResourcePack {
     MUSHROOM("images/blocks/myceliumBlock.png", "images/blocks/mushroomBlock.png", "images/characters/zombie.png"),
     SNOW("images/blocks/snowBlock.png", "images/blocks/spruceWoodBlock.png", "images/characters/wolf.png");
 
-    private final Image walkablePath;
-    private final Image blockedPath;
-    private final Image mobBlock;
-
-    private static final Image startBlock = new Image("images/blocks/emeraldBlock.png");
+    //ITEMS
     private static final Image sword = new Image("images/items/sword.png");
     private static final Image heart = new Image("images/items/heart.png");
     private static final Image armor = new Image("images/items/armor.png");
     private static final Image boots = new Image("images/items/boots.png");
     private static final Image healthPotion = new Image("images/items/healPotion.png");
     private static final Image invisPotion = new Image("images/items/invisPotion.gif");
-    private static final Image endBlock = new Image("images/blocks/goldBlock.png");
+    private static final Image bow = new Image("images/items/bow.png");
+    private static final Image arrow = new Image("images/items/arrow.png");
 
+    //BLOCKS
+    private final Image walkablePath;
+    private final Image blockedPath;
+    private final Image mobBlock;
+
+
+    private static final Image startBlock = new Image("images/blocks/emeraldBlock.png");
+    private static final Image endBlock = new Image("images/blocks/goldBlock.png");
     private static final Image teleporter = new Image("images/blocks/portalBlock.png");
 
     ResourcePack(String walkablePath, String blockedPath, String mobBlock) {
@@ -30,6 +35,8 @@ public enum ResourcePack {
         this.blockedPath = new Image(blockedPath);
         this.mobBlock = new Image(mobBlock);
     }
+
+    //GETTERS
 
     public Image getWalkablePath() {
         return walkablePath;
@@ -77,5 +84,13 @@ public enum ResourcePack {
 
     public static Image getInvisPotion() {
         return invisPotion;
+    }
+
+    public static Image getBow() {
+        return bow;
+    }
+
+    public static Image getArrow() {
+        return arrow;
     }
 }

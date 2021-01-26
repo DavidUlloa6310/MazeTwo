@@ -102,6 +102,8 @@ public abstract class SceneLibrary {
                 maze.getPlayer().moveDown();
             } else if (key.getCode() == KeyCode.D) {
                 maze.getPlayer().moveRight();
+            } else if (key.getCode() == KeyCode.F) {
+                maze.getPlayer().shoot();
             }
 
             if ((maze.getPlayer().getCoordX() == maze.getFinalX() && maze.getPlayer().getCoordY() == maze.getFinalY()) || key.getCode() == KeyCode.L) {
