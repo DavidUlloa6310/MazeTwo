@@ -58,6 +58,7 @@ public class BuilderController {
         resetCanvas();
         selectorImage.setImage(resourcePack.getBlockedPath());
         aboutUI();
+        JOP.msg("If you want to know about what each item does, go to Help, click About Items.\nIf you need help playing the game, click Help, About UI.");
     }
 
     public void clickCanvas(MouseEvent e) {
@@ -98,6 +99,7 @@ public class BuilderController {
             case ENDBLOCK:
                 if (exitBlock == null) {
                     exitBlock = new Point(xBox, yBox);
+                    maze[yBox][xBox] = false;
                     gc.drawImage(ResourcePack.getEndBlock(), xBox * Main.getTileSize(), yBox * Main.getTileSize());
                 } else if (exitBlock.getX() == xBox && exitBlock.getY() == yBox) {
                     exitBlock = null;
@@ -194,6 +196,22 @@ public class BuilderController {
 
         for (Point sword : swordSpawns) {
             gc.drawImage(ResourcePack.getSword(), sword.getX() * Main.getTileSize(), sword.getY() * Main.getTileSize());
+        }
+
+        for (Point healthPotion : healthPotionSpawns) {
+            gc.drawImage(ResourcePack.getHealthPotion(), healthPotion.getX() * Main.getTileSize(), healthPotion.getY() * Main.getTileSize());
+        }
+
+        for (Point invisPotion : invisPotionSpawns) {
+            gc.drawImage(ResourcePack.getInvisPotion(), invisPotion.getX() * Main.getTileSize(), invisPotion.getY() * Main.getTileSize());
+        }
+
+        for (Point boots : bootSpawns) {
+            gc.drawImage(ResourcePack.getBoots(), boots.getX() * Main.getTileSize(), boots.getY() * Main.getTileSize());
+        }
+
+        for (Point armor : armorSpawns) {
+            gc.drawImage(ResourcePack.getArmor(), armor.getX() * Main.getTileSize(), armor.getY() * Main.getTileSize());
         }
 
         for (Point mob : mobSpawns) {
@@ -350,6 +368,18 @@ public class BuilderController {
         return false;
     }
 
+    // USE CURRENT MAZE
+    public Maze getCurrentMaze() {
+        Maze currentMaze = new Maze(maze, resourcePack, mobSpawns, teleporters, exitBlock, playerSpawn);
+
+        currentMaze.addSwords(swordSpawns);
+        currentMaze.addBoots(bootSpawns);
+        currentMaze.addArmor(armorSpawns);
+        currentMaze.addHealthPotion(healthPotionSpawns);
+        currentMaze.addInvisPotion(invisPotionSpawns);
+
+        return currentMaze;
+    }
     public void previewGame() {
         if (playerSpawn == null || exitBlock == null) {
             JOP.msg("Every maze needs to have at least one player spawn and a exit block. ");
@@ -357,7 +387,6 @@ public class BuilderController {
         }
         SceneLibrary.previewGame(getCurrentMaze());
     }
-
     public void save() {
         int save = 4;
         while (save < 1 || save > 3) {
@@ -377,18 +406,17 @@ public class BuilderController {
 
     }
 
+    // PLAY SAVED MAZES
     public void playCustomMazeOne() {
         if (customMazes[0] != null) {
             SceneLibrary.previewGame(customMazes[0]);
         }
     }
-
     public void playCustomMazeTwo() {
         if (customMazes[1] != null) {
             SceneLibrary.previewGame(customMazes[1]);
         }
     }
-
     public void playCustomMazeThree() {
         if (customMazes[2] != null) {
             SceneLibrary.previewGame(customMazes[2]);
@@ -398,34 +426,20 @@ public class BuilderController {
     public void playDefaultMazeOne() {
         SceneLibrary.previewGame(SceneLibrary.getMazes().get(0));
     }
-
     public void playDefaultMazeTwo() {
         SceneLibrary.previewGame(SceneLibrary.getMazes().get(1));
     }
-
     public void playDefaultMazeThree() {
         SceneLibrary.previewGame(SceneLibrary.getMazes().get(2));
     }
-
     public void playDefaultMazeFour() {
         SceneLibrary.previewGame(SceneLibrary.getMazes().get(3));
     }
 
-    public Maze getCurrentMaze() {
-        Maze currentMaze = new Maze(maze, resourcePack, mobSpawns, teleporters, exitBlock, playerSpawn);
-
-        currentMaze.addSwords(swordSpawns);
-        currentMaze.addBoots(bootSpawns);
-        currentMaze.addArmor(armorSpawns);
-        currentMaze.addHealthPotion(healthPotionSpawns);
-        currentMaze.addInvisPotion(invisPotionSpawns);
-
-        return currentMaze;
-    }
-
+    // ABOUT GUIDES
     public void aboutUI() {
-        JOP.msg("You can build the maze by left clicking to put blocked area, right click to remove.\nEvery maze has to have a spawn and exit, so click buttons on the bottom to select each.\nSame applies to mobs and swords. The image on the bottom left shows selected item." +
-                "\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.\nTo change the dimensions, go to Edit, Change Dimensions\nTo save maze, click File, Save, and enter what save you want to have.\nTo play saved mazes, click Saves, and select which maze. There are also premade mazes that can be played." +
+        JOP.msg("You can build the maze by left clicking to put blocked area, right click to remove.\nEvery maze has to have a spawn and exit, so click buttons on the bottom to select each.\nSame applies to mobs and items. The image on the bottom left shows selected item." +
+                "\nYou can remove items and mobs by left clicking already placed mobs.\nTo play the maze, go to top left and click File, Play.\nTo clear maze, click Edit, Clear.\nTo change the dimensions, go to Edit, Change Dimensions.\nTo save maze, click File, Save, and enter what save you want to have.\nTo play saved mazes, click Saves, and select which maze. There are also premade mazes that can be played." +
                 "\nTo select the resource pack, select from drop down menu and click the update button.");
     }
 
