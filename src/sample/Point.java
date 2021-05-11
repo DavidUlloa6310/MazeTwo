@@ -1,6 +1,7 @@
 package sample;
 
 public class Point {
+    //Represents any point (2d vector) in the maze.
     private int x;
     private int y;
 

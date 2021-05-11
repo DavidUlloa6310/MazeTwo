@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class PlayerModel extends Character {
+    //Represents the player
 
     private boolean hasSword = false;
     private boolean hasBoots = false;

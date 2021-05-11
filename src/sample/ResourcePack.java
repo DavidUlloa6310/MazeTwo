@@ -3,6 +3,7 @@ package sample;
 import javafx.scene.image.Image;
 
 public enum ResourcePack {
+    //Groups the textures for each game as a resource pack enum value
     GRASS("images/blocks/grassBlock.png", "images/blocks/woodPlank.png", "images/characters/creeper.png"),
     CAVE("images/blocks/stoneBrickBlock.png", "images/blocks/lavaBlock.png", "images/characters/spider.png"),
     NETHER("images/blocks/netherrack.png", "images/blocks/netherBrick.png", "images/characters/blaze.png"),

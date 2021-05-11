@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    //Much simpler Main class. Just has important launch variables, such as width, height, and tile size.
 
     public static int width = 0;
     public static int height = 0;

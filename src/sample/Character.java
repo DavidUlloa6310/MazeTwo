@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import static sample.Main.*;
 
 public class Character extends ImageView {
+    //Any character; can be minotaur or player.
     private int x;
     private int y;
     private Point spawn;

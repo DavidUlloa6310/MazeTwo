@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class BuilderController {
+    //SceneBuilder connection to code.
 
     @FXML
     private Canvas canvas;

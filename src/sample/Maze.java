@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Maze extends GridPane {
+    //Maze gridpane, which has all the important variables for the maze
     //ADD OPTION FOR TELEPORTER
 
     private boolean[][] maze;

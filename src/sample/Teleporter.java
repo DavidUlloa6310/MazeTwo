@@ -3,6 +3,7 @@ package sample;
 import javafx.scene.image.ImageView;
 
 public class Teleporter extends ImageView {
+    //Teleporter block object
     private final Point startPoint;
     private final Point teleportPoint;
     private Maze maze;

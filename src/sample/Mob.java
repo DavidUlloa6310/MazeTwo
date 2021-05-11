@@ -9,6 +9,7 @@ import static sample.Main.*;
 import javax.swing.*;
 
 public class Mob extends Character {
+    //Represents the mobs
     private boolean isDead = false;
     private int speed = 2;
 
